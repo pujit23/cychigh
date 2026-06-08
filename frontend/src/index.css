@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base ─── */
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FFD700;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #CC9900;
+}
+
+/* ─── Hex Grid BG ─── */
+.hex-bg {
+  background-image:
+    linear-gradient(30deg, rgba(255, 215, 0, 0.03) 12%, transparent 12.5%, transparent 87%, rgba(255, 215, 0, 0.03) 87.5%),
+    linear-gradient(150deg, rgba(255, 215, 0, 0.03) 12%, transparent 12.5%, transparent 87%, rgba(255, 215, 0, 0.03) 87.5%),
+    linear-gradient(30deg, rgba(255, 215, 0, 0.03) 12%, transparent 12.5%, transparent 87%, rgba(255, 215, 0, 0.03) 87.5%),
+    linear-gradient(150deg, rgba(255, 215, 0, 0.03) 12%, transparent 12.5%, transparent 87%, rgba(255, 215, 0, 0.03) 87.5%);
+  background-size: 80px 140px;
+  background-position: 0 0, 0 0, 40px 70px, 40px 70px;
+}
+
+/* ─── Gold Stripe ─── */
+.gold-stripe::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #FFD700, transparent);
+}
+
+/* ─── Shimmer Loading ─── */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #1A1A1A 25%, #2A2A2A 50%, #1A1A1A 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ─── Floating Bee ─── */
+@keyframes beeFly {
+
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  25% {
+    transform: translate(-10px, -15px) rotate(-5deg);
+  }
+
+  50% {
+    transform: translate(5px, -25px) rotate(5deg);
+  }
+
+  75% {
+    transform: translate(15px, -10px) rotate(-3deg);
+  }
+}
+
+.bee-fly {
+  animation: beeFly 8s ease-in-out infinite;
+}
+
+/* ─── Bike Animations ─── */
+@keyframes bikeFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes goldPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes scanDown {
+  0% { top: 5%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 95%; opacity: 0; }
+}
+
+@keyframes slowRotate {
+  from { transform: translate(-50%,-50%) rotate(0deg); }
+  to { transform: translate(-50%,-50%) rotate(360deg); }
+}
+
+@keyframes slowRotateReverse {
+  from { transform: translate(-50%,-50%) rotate(0deg); }
+  to { transform: translate(-50%,-50%) rotate(-360deg); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .bike-container { display: none !important; }
+}

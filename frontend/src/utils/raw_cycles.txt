@@ -1,0 +1,120 @@
+001 Trek Marlin 4 — MTB — ₹32,000
+002 Trek Marlin 5 — MTB — ₹38,000
+003 Trek Marlin 6 — MTB — ₹48,000
+004 Trek Marlin 7 — MTB — ₹62,000
+005 Trek Marlin 8 — MTB — ₹75,000
+006 Trek FX 1 — Hybrid — ₹38,000
+007 Trek FX 2 — Hybrid — ₹52,000
+008 Trek FX 3 — Hybrid — ₹68,000
+009 Trek Verve 1 — City — ₹32,000
+010 Trek Verve 2 — City — ₹42,000
+011 Trek Domane AL 2 — Road — ₹72,000
+012 Trek Domane AL 3 — Road — ₹92,000
+013 Trek Dual Sport 1 — Hybrid — ₹35,000
+014 Trek Dual Sport 2 — Hybrid — ₹45,000
+015 Trek Dual Sport 3 — Hybrid — ₹58,000
+016 Trek X-Caliber 7 — MTB — ₹82,000
+017 Trek X-Caliber 8 — MTB — ₹1,05,000
+018 Trek Roscoe 7 — MTB — ₹92,000
+019 Trek Roscoe 8 — MTB — ₹1,15,000
+020 Trek Slash 9.8 — MTB — ₹3,50,000
+021 Giant Talon 1 — MTB — ₹42,000
+022 Giant Talon 2 — MTB — ₹35,000
+023 Giant Talon 3 — MTB — ₹28,000
+024 Giant ATX — MTB — ₹22,000
+025 Giant ATX 1 — MTB — ₹25,000
+026 Giant ATX 2 — MTB — ₹28,000
+027 Giant Escape 2 — Hybrid — ₹38,000
+028 Giant Escape 3 — Hybrid — ₹32,000
+029 Giant Contend 3 — Road — ₹52,000
+030 Giant Contend AR — Road — ₹68,000
+031 Giant Revolt 2 — Gravel — ₹58,000
+032 Giant Roam 2 — Hybrid — ₹35,000
+033 Giant Roam 3 — Hybrid — ₹28,000
+034 Giant Fathom 1 — MTB — ₹82,000
+035 Giant Fathom 2 — MTB — ₹65,000
+036 Giant Trance X — MTB — ₹1,85,000
+037 Giant Stance 2 — MTB — ₹72,000
+038 Giant Propel Advanced — Road — ₹2,20,000
+039 Giant Defy Advanced — Road — ₹1,65,000
+040 Giant FastRoad SL — Hybrid — ₹85,000
+041 Specialized Rockhopper — MTB — ₹38,000
+042 Specialized Rockhopper Comp — MTB — ₹52,000
+043 Specialized Rockhopper Elite — MTB — ₹68,000
+044 Specialized Hardrock — MTB — ₹28,000
+045 Specialized Pitch — MTB — ₹22,000
+046 Specialized Sirrus 2.0 — Hybrid — ₹52,000
+047 Specialized Sirrus X — Hybrid — ₹68,000
+048 Specialized Allez — Road — ₹72,000
+049 Specialized Allez Elite — Road — ₹95,000
+050 Specialized Diverge — Gravel — ₹1,15,000
+051 Specialized Roubaix — Road — ₹1,45,000
+052 Specialized Stumpjumper — MTB — ₹1,85,000
+053 Specialized Turbo Vado — Electric — ₹2,50,000
+054 Specialized Turbo Como — Electric — ₹2,20,000
+055 Specialized Epic Hardtail — MTB — ₹1,25,000
+056 Specialized Epic Evo — MTB — ₹2,80,000
+057 Specialized Fuse — MTB — ₹1,15,000
+058 Specialized Enduro — MTB — ₹2,45,000
+059 Specialized Demo — MTB — ₹3,20,000
+060 Specialized Tarmac — Road — ₹2,15,000
+061 Hero Sprint Pro — Road — ₹18,000
+062 Hero Sprint Compass — Road — ₹14,000
+063 Hero Octane Bonito — MTB — ₹16,000
+064 Hero Octane Salamander — MTB — ₹18,000
+065 Hero Octane Parkour — MTB — ₹22,000
+066 Hercules Roadeo A50 — MTB — ₹8,500
+067 Hercules Roadeo A75 — MTB — ₹10,500
+068 Hercules Roadeo Turnkey — MTB — ₹12,000
+069 Hercules Top Gear — Hybrid — ₹9,500
+070 Hercules Street Rider — City — ₹7,500
+071 Firefox Mountana 29 — MTB — ₹22,000
+072 Firefox Road Runner — Road — ₹18,000
+073 Firefox Bad Attitude 7 — MTB — ₹28,000
+074 Firefox Voya — Hybrid — ₹16,000
+075 Firefox Rapide — Road — ₹24,000
+076 Montra Madrock — MTB — ₹18,000
+077 Montra Downtown — City — ₹14,000
+078 Montra Blues — Road — ₹22,000
+079 Montra Chord — Hybrid — ₹16,000
+080 Montra Trance — MTB — ₹24,000
+081 Cannondale Trail 5 — MTB — ₹42,000
+082 Cannondale Trail 6 — MTB — ₹35,000
+083 Cannondale Trail 7 — MTB — ₹28,000
+084 Cannondale Quick 3 — Hybrid — ₹48,000
+085 Cannondale Quick CX 4 — Gravel — ₹55,000
+086 Scott Aspect 940 — MTB — ₹32,000
+087 Scott Aspect 950 — MTB — ₹28,000
+088 Scott Scale 970 — MTB — ₹65,000
+089 Scott Contessa Active — MTB — ₹35,000
+090 Merida Big Nine 100 — MTB — ₹32,000
+091 Merida Big Nine 200 — MTB — ₹42,000
+092 Merida Big Seven 100 — MTB — ₹28,000
+093 Merida Scultura 200 — Road — ₹65,000
+094 Merida Crossway 20 — Hybrid — ₹35,000
+095 Marin Fairfax 1 — City — ₹38,000
+096 Marin Fairfax 2 — City — ₹48,000
+097 Marin Bobcat Trail — MTB — ₹42,000
+098 Marin Gestalt — Gravel — ₹55,000
+099 Marin Rift Zone — MTB — ₹85,000
+100 Marin DSX — MTB — ₹72,000
+101 Polygon Path 2 — Hybrid — ₹28,000
+102 Polygon Strattos S2 — Road — ₹45,000
+103 Polygon Cascade 3 — MTB — ₹32,000
+104 Polygon Xtrada 6 — MTB — ₹55,000
+105 Polygon Heist X2 — Urban — ₹38,000
+106 Btwin Rockrider ST100 — MTB — ₹8,999
+107 Btwin Rockrider ST120 — MTB — ₹10,999
+108 Btwin Rockrider ST520 — MTB — ₹18,999
+109 Btwin Riverside 120 — Hybrid — ₹12,999
+110 Btwin Riverside 500 — Hybrid — ₹22,999
+111 Cradiac Gunner Pro — MTB — ₹14,000
+112 Cradiac Squad — MTB — ₹11,000
+113 Cradiac Alpha Pro — Hybrid — ₹12,500
+114 Leader Beast 26T — MTB — ₹6,500
+115 Leader Scout — MTB — ₹8,000
+116 Java Fuoco — Road — ₹55,000
+117 OMO Hybrid 700C — Hybrid — ₹32,000
+118 Kross Maximus — MTB — ₹28,000
+119 Kross Xceed — MTB — ₹35,000
+120 Kross Viper — Road — ₹42,000

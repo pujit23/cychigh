@@ -1,0 +1,12 @@
+const router = require('express').Router()
+const { getCycles, getCycleById, searchCycles, compareCycles, addCycle, updateCycle, deleteCycle, bulkImport } = require('../controllers/cycleController')
+const { protect, admin } = require('../middleware/authMiddleware')
+router.get('/', getCycles)
+router.get('/search', searchCycles)
+router.get('/compare', compareCycles)
+router.get('/:id', getCycleById)
+router.post('/', protect, admin, addCycle)
+router.put('/:id', protect, admin, updateCycle)
+router.delete('/:id', protect, admin, deleteCycle)
+router.post('/bulk-import', protect, admin, bulkImport)
+module.exports = router

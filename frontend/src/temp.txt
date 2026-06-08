@@ -1,0 +1,1 @@
+import React as 'react'; // Ignore, writing to file below with proper content

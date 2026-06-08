@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CycHigh — Your All-In-One Cycle Encyclopedia</title>
+    <meta name="description"
+        content="CycHigh is a premium cycle encyclopedia covering 18+ cycle types with full specs, parts, pricing, and maintenance tips.">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap');
+
+        :root {
+            --yellow: #FFD700;
+            --yellow-glow: #FFD700aa;
+            --yellow-dark: #CC9900;
+            --black: #0D0D0D;
+            --dark-panel: #1A1A1A;
+            --mid-panel: #242424;
+            --border: #333;
+            --text-primary: #FFF;
+            --text-secondary: #AAA;
+            --accent: #FFC200;
+            --sidebar-w: 280px;
+            --nav-h: 64px;
+            --footer-h: 44px
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--black);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1px
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-panel)
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--yellow-dark);
+            border-radius: 4px
+        }
+
+        /* NAV */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--nav-h);
+            background: var(--dark-panel);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 100;
+            border-bottom: 2px solid var(--yellow);
+            gap: 16px
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0
+        }
+
+        .nav-logo .bee {
+            font-size: 28px;
+            animation: beePulse 2s infinite
+        }
+
+        .nav-logo h1 {
+            font-size: 28px;
+            color: var(--yellow);
+            margin: 0
+        }
+
+        .nav-logo .sub {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: -4px
+        }
+
+        .nav-search {
+            flex: 1;
+            max-width: 360px;
+            position: relative
+        }
+
+        .nav-search input {
+            width: 100%;
+            padding: 8px 14px 8px 36px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: var(--mid-panel);
+            color: var(--text-primary);
+            font-size: 14px;
+            outline: none;
+            transition: .3s
+        }
+
+        .nav-search input:focus {
+            border-color: var(--yellow);
+            box-shadow: 0 0 8px var(--yellow-glow)
+        }
+
+        .nav-search::before {
+            content: '🔍';
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px
+        }
+
+        .nav-right {
+            margin-left: auto;
+            display: flex;
+            gap: 10px;
+            align-items: center
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--yellow);
+            padding: 6px 12px;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: .3s
+        }
+
+        .theme-toggle:hover {
+            background: var(--yellow);
+            color: var(--black)
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--yellow);
+            font-size: 24px;
+            cursor: pointer
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            top: var(--nav-h);
+            left: 0;
+            bottom: var(--footer-h);
+            width: var(--sidebar-w);
+            background: var(--dark-panel);
+            overflow-y: auto;
+            z-index: 90;
+            border-right: 1px solid var(--border);
+            transition: transform .3s
+        }
+
+        .sidebar-group {
+            border-bottom: 1px solid var(--border)
+        }
+
+        .sidebar-group-title {
+            padding: 14px 16px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            color: var(--yellow);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: .2s
+        }
+
+        .sidebar-group-title:hover {
+            background: var(--mid-panel)
+        }
+
+        .sidebar-group-title .arrow {
+            transition: transform .3s;
+            font-size: 12px
+        }
+
+        .sidebar-group.collapsed .arrow {
+            transform: rotate(-90deg)
+        }
+
+        .sidebar-group.collapsed .sidebar-items {
+            display: none
+        }
+
+        .sidebar-items {
+            list-style: none
+        }
+
+        .sidebar-item {
+            padding: 10px 16px 10px 24px;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: all .2s;
+            border-left: 3px solid transparent;
+            position: relative
+        }
+
+        .sidebar-item:hover {
+            background: var(--mid-panel);
+            color: var(--text-primary);
+            transform: scale(1.02);
+            box-shadow: inset 0 0 12px var(--yellow-glow)
+        }
+
+        .sidebar-item.active {
+            background: var(--yellow);
+            color: var(--black);
+            font-weight: 700;
+            border-left: 3px solid var(--accent);
+            box-shadow: 0 0 12px var(--yellow-glow)
+        }
+
+        .compare-btn-wrap {
+            padding: 12px 16px
+        }
+
+        .compare-btn {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: 2px solid var(--yellow);
+            color: var(--yellow);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: .3s;
+            letter-spacing: 1px
+        }
+
+        .compare-btn:hover {
+            background: var(--yellow);
+            color: var(--black)
+        }
+
+        .compare-btn.active {
+            background: var(--yellow);
+            color: var(--black)
+        }
+
+        /* MAIN */
+        .main {
+            margin-left: var(--sidebar-w);
+            margin-top: var(--nav-h);
+            margin-bottom: var(--footer-h);
+            min-height: calc(100vh - var(--nav-h) - var(--footer-h));
+            padding: 24px 32px;
+            position: relative
+        }
+
+        /* HERO */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - var(--nav-h) - var(--footer-h) - 48px);
+            text-align: center;
+            animation: fadeIn .6s
+        }
+
+        .hero .bee-big {
+            font-size: 100px;
+            animation: beeFly 4s ease-in-out infinite
+        }
+
+        .hero h2 {
+            font-size: 56px;
+            color: var(--yellow);
+            margin: 16px 0 8px
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--text-secondary);
+            animation: pulse 2s infinite
+        }
+
+        .hex-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='52'%3E%3Cpath d='M30 0L60 15v22L30 52 0 37V15z' fill='none' stroke='%23FFD70015' stroke-width='1'/%3E%3C/svg%3E");
+            background-size: 60px 52px
+        }
+
+        /* CYCLE DETAIL */
+        .cycle-detail {
+            animation: slideUp .5s ease-out
+        }
+
+        .cycle-title {
+            font-size: 52px;
+            color: var(--yellow);
+            margin-bottom: 4px
+        }
+
+        .cycle-subtitle {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 24px
+        }
+
+        /* ACCORDION */
+        .accordion {
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden
+        }
+
+        .accordion-header {
+            padding: 14px 18px;
+            background: var(--mid-panel);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            color: var(--yellow);
+            user-select: none;
+            transition: .2s;
+            position: relative;
+            overflow: hidden
+        }
+
+        .accordion-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--yellow)
+        }
+
+        .accordion-header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20px;
+            width: 60px;
+            height: 200%;
+            background: repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(255, 215, 0, .06) 8px, rgba(255, 215, 0, .06) 16px);
+            pointer-events: none
+        }
+
+        .accordion-header:hover {
+            background: #2a2a2a
+        }
+
+        .accordion-header .icon {
+            font-size: 18px
+        }
+
+        .accordion-header .arrow {
+            margin-left: auto;
+            transition: transform .3s;
+            font-size: 14px
+        }
+
+        .accordion.open .accordion-header .arrow {
+            transform: rotate(180deg)
+        }
+
+        .accordion-body {
+            display: none;
+            padding: 16px 20px;
+            background: var(--dark-panel)
+        }
+
+        .accordion.open .accordion-body {
+            display: block;
+            animation: slideDown .3s
+        }
+
+        .spec-row {
+            display: flex;
+            padding: 6px 0;
+            border-bottom: 1px solid #2a2a2a;
+            font-size: 14px;
+            flex-wrap: wrap
+        }
+
+        .spec-label {
+            color: var(--text-secondary);
+            width: 220px;
+            flex-shrink: 0;
+            padding-right: 8px
+        }
+
+        .spec-value {
+            color: var(--yellow);
+            flex: 1;
+            font-weight: 500
+        }
+
+        .parts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 10px
+        }
+
+        .part-card {
+            background: var(--mid-panel);
+            padding: 10px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: .2s;
+            font-size: 13px
+        }
+
+        .part-card:hover {
+            border-color: var(--yellow);
+            box-shadow: 0 0 8px var(--yellow-glow)
+        }
+
+        .part-card .pname {
+            color: var(--yellow);
+            font-weight: 700;
+            margin-bottom: 2px
+        }
+
+        .part-card .pdesc {
+            color: var(--text-secondary)
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px
+        }
+
+        .pros-cons ul {
+            list-style: none;
+            padding: 0
+        }
+
+        .pros-cons li {
+            padding: 4px 0;
+            font-size: 14px
+        }
+
+        .pros-cons li::before {
+            margin-right: 6px
+        }
+
+        .pros li::before {
+            content: '✅'
+        }
+
+        .cons li::before {
+            content: '⚠️'
+        }
+
+        .price-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px
+        }
+
+        .price-table th,
+        .price-table td {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            text-align: left
+        }
+
+        .price-table th {
+            background: var(--mid-panel);
+            color: var(--yellow)
+        }
+
+        /* SHIMMER */
+        .shimmer {
+            background: linear-gradient(90deg, var(--dark-panel) 25%, var(--mid-panel) 50%, var(--dark-panel) 75%);
+            background-size: 200%;
+            animation: shimmer 1.2s infinite;
+            border-radius: 6px;
+            height: 20px;
+            margin: 8px 0
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200%
+            }
+
+            100% {
+                background-position: -200%
+            }
+        }
+
+        /* COMPARE */
+        .compare-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, .85);
+            z-index: 200;
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 80px 20px;
+            overflow-y: auto
+        }
+
+        .compare-overlay.show {
+            display: flex
+        }
+
+        .compare-box {
+            background: var(--dark-panel);
+            border: 2px solid var(--yellow);
+            border-radius: 12px;
+            max-width: 1000px;
+            width: 100%;
+            padding: 24px;
+            position: relative
+        }
+
+        .compare-box h2 {
+            color: var(--yellow);
+            font-size: 32px;
+            margin-bottom: 16px
+        }
+
+        .compare-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            color: var(--yellow);
+            font-size: 28px;
+            cursor: pointer
+        }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px
+        }
+
+        .compare-table th,
+        .compare-table td {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            text-align: left;
+            vertical-align: top
+        }
+
+        .compare-table th {
+            background: var(--mid-panel);
+            color: var(--yellow);
+            min-width: 140px
+        }
+
+        .compare-select {
+            padding: 6px 12px;
+            background: var(--mid-panel);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            border-radius: 6px;
+            font-size: 14px;
+            margin: 0 6px 12px 0
+        }
+
+        /* GLOSSARY MODAL */
+        .glossary-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--dark-panel);
+            border: 2px solid var(--yellow);
+            border-radius: 12px;
+            padding: 24px;
+            z-index: 300;
+            max-width: 400px;
+            width: 90%;
+            display: none;
+            box-shadow: 0 0 30px var(--yellow-glow)
+        }
+
+        .glossary-modal.show {
+            display: block;
+            animation: fadeIn .3s
+        }
+
+        .glossary-modal h3 {
+            color: var(--yellow);
+            font-size: 22px;
+            margin-bottom: 8px
+        }
+
+        .glossary-modal p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6
+        }
+
+        .glossary-modal .close-gl {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            background: none;
+            border: none;
+            color: var(--yellow);
+            font-size: 22px;
+            cursor: pointer
+        }
+
+        .glossary-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, .5);
+            z-index: 290;
+            display: none
+        }
+
+        .glossary-backdrop.show {
+            display: block
+        }
+
+        /* SCROLL TOP */
+        .scroll-top {
+            position: fixed;
+            bottom: 60px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            background: var(--yellow);
+            color: var(--black);
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 80;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 16px var(--yellow-glow);
+            transition: .3s
+        }
+
+        .scroll-top:hover {
+            transform: scale(1.15)
+        }
+
+        .scroll-top.show {
+            display: flex
+        }
+
+        /* FOOTER */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: var(--footer-h);
+            background: var(--dark-panel);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-top: 2px solid var(--yellow);
+            z-index: 100;
+            font-size: 13px;
+            color: var(--text-secondary)
+        }
+
+        .footer span {
+            color: var(--yellow);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 16px;
+            margin: 0 6px
+        }
+
+        /* BEE MASCOT */
+        .bee-mascot {
+            position: fixed;
+            bottom: 90px;
+            left: 20px;
+            font-size: 32px;
+            z-index: 80;
+            animation: beeFly 6s ease-in-out infinite;
+            pointer-events: none;
+            opacity: .7
+        }
+
+        /* PRINT */
+        @media print {
+
+            .navbar,
+            .sidebar,
+            .footer,
+            .scroll-top,
+            .bee-mascot,
+            .hex-bg,
+            .compare-overlay {
+                display: none !important
+            }
+
+            .main {
+                margin: 0 !important;
+                padding: 16px !important
+            }
+
+            .accordion-body {
+                display: block !important
+            }
+
+            .cycle-title {
+                font-size: 28px
+            }
+        }
+
+        /* MOBILE */
+        @media(max-width:768px) {
+            .sidebar {
+                transform: translateX(-100%)
+            }
+
+            .sidebar.open {
+                transform: translateX(0)
+            }
+
+            .main {
+                margin-left: 0
+            }
+
+            .hamburger {
+                display: block
+            }
+
+            .nav-search {
+                max-width: 180px
+            }
+
+            .hero h2 {
+                font-size: 36px
+            }
+
+            .cycle-title {
+                font-size: 36px
+            }
+
+            .pros-cons {
+                grid-template-columns: 1fr
+            }
+        }
+
+        /* LIGHT MODE */
+        body.light {
+            --black: #f5f5f5;
+            --dark-panel: #fff;
+            --mid-panel: #eee;
+            --border: #ddd;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666
+        }
+
+        body.light .hex-bg {
+            opacity: .3
+        }
+
+        /* KEYFRAMES */
+        @keyframes fadeIn {
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @keyframes beePulse {
+
+            0%,
+            100% {
+                transform: scale(1)
+            }
+
+            50% {
+                transform: scale(1.15)
+            }
+        }
+
+        @keyframes beeFly {
+            0% {
+                transform: translate(0, 0) rotate(0)
+            }
+
+            25% {
+                transform: translate(15px, -10px) rotate(5deg)
+            }
+
+            50% {
+                transform: translate(0, -20px) rotate(0)
+            }
+
+            75% {
+                transform: translate(-15px, -10px) rotate(-5deg)
+            }
+
+            100% {
+                transform: translate(0, 0) rotate(0)
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .6
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hex-bg"></div>
+    <nav class="navbar">
+        <button class="hamburger" onclick="toggleSidebar()">☰</button>
+        <div class="nav-logo"><span class="bee">🐝</span>
+            <div>
+                <h1>CycHigh</h1>
+                <div class="sub">Your All-In-One Cycle Encyclopedia</div>
+            </div>
+        </div>
+        <div class="nav-search"><input type="text" id="searchInput" placeholder="Search cycles..."
+                oninput="filterCycles()"></div>
+        <div class="nav-right">
+            <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
+            <button class="compare-btn"
+                style="width:auto;padding:6px 14px;font-size:13px;font-family:'DM Sans',sans-serif"
+                onclick="printSpec()">🖨️ Print</button>
+        </div>
+    </nav>
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="main" id="mainContent"></main>
+    <footer class="footer">🐝 <span>CycHigh</span> — Know Your Ride © 2026</footer>
+    <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0})">🐝</button>
+    <div class="bee-mascot">🐝</div>
+    <div class="compare-overlay" id="compareOverlay">
+        <div class="compare-box" id="compareBox"></div>
+    </div>
+    <div class="glossary-backdrop" id="glBackdrop" onclick="closeGlossary()"></div>
+    <div class="glossary-modal" id="glModal"><button class="close-gl" onclick="closeGlossary()">✕</button>
+        <h3 id="glTitle"></h3>
+        <p id="glDesc"></p>
+    </div>
+    <script>
+
+        const PARTS_GLOSSARY = { Fork: "The front fork holds the front wheel and allows steering. On suspension bikes it absorbs bumps.", Headset: "Bearing assembly connecting the fork steerer tube to the frame's head tube, allowing smooth steering.", Stem: "Connects handlebars to the fork steerer tube. Length affects reach and handling.", Handlebars: "Steering control bar. Types include flat, drop, riser, and clip-on.", Grips: "Rubber or foam covers on handlebars for comfort and grip. Road bikes use bar tape instead.", "Bar tape": "Padded wrap around drop handlebars for cushioning and grip.", "Brake levers": "Hand-operated levers that activate the braking system.", "Shifters": "Controls for changing gears on the drivetrain.", "Front derailleur": "Mechanism that moves the chain between front chainrings to change gear ratios.", "Rear derailleur": "Mechanism that moves the chain across rear cassette sprockets for gear changes.", Chain: "Metal link chain transferring pedal power from chainrings to rear sprocket.", Crankset: "Assembly of crank arms and chainrings attached to the bottom bracket, converting leg power to rotational motion.", "Bottom bracket": "Bearing assembly in the frame connecting crankset to frame. Types include threaded, press-fit.", Pedals: "Foot platforms attached to crank arms. Types include flat, clipless, toe-clip.", Cassette: "Set of rear sprockets of varying sizes mounted on the rear hub freehub body.", Freewheel: "Older rear gear cluster that threads onto the hub. Contains its own ratchet mechanism.", Seatpost: "Tube inserted into the frame's seat tube supporting the saddle. May be adjustable height (dropper).", Saddle: "The seat. Shapes vary for different riding styles — narrow for road, wider for comfort.", Frame: "The main structural body of the cycle. Materials include steel, aluminum, carbon fiber, titanium.", "Disc rotors": "Metal discs attached to wheel hubs that brake pads clamp onto for stopping power.", "Brake pads": "Friction material that presses against rotors or rims to slow the wheel.", Calipers: "The mechanism housing brake pads and actuating them against the rotor or rim.", Cables: "Steel inner cables and outer housing that transmit brake and shift lever inputs to components.", "Seatpost clamp": "Clamp securing the seatpost inside the frame's seat tube at desired height.", Kickstand: "Retractable leg allowing the cycle to stand upright when parked.", Bell: "Audible warning device mounted on handlebars.", Reflectors: "Passive safety devices that reflect light for visibility.", Mudguards: "Fenders mounted above wheels to block water and debris spray.", "Rear derailleur hanger": "Small bracket connecting the rear derailleur to the frame. Designed to bend/break to protect the frame.", Engine: "Internal combustion or electric motor providing propulsion for motorized cycles.", Exhaust: "System directing spent combustion gases away from the engine. Includes header pipe and muffler.", "Air filter": "Filters dust and debris from air entering the engine for clean combustion.", "Carburetor": "Mechanical device mixing air and fuel in correct ratio for engine combustion.", "Fuel injector": "Electronic device precisely spraying fuel into the engine. More efficient than carburetors.", "Spark plug": "Creates electrical spark to ignite fuel-air mixture in combustion engines.", Clutch: "Mechanism engaging/disengaging engine power from the transmission for gear changes.", "Instrument cluster": "Dashboard display showing speed, RPM, fuel level, temperature, and warning indicators.", "Fuel tank": "Container storing fuel. Capacities vary from 5L (scooters) to 20L+ (touring bikes).", Swingarm: "Rear suspension arm connecting rear wheel axle to frame pivot point.", Fairing: "Aerodynamic body panels covering the frame. Reduces wind resistance and protects rider.", "Turn signals": "Electrically operated lights indicating intended direction of turn." };
+
+        const CYCLES_DATA = [
+            {
+                id: "road-bike", name: "Road Bike", nicknames: "Racing Bicycle, Roadie, Drop-bar Bike", category: "non-motorized",
+                overview: { origin: "Originated in the late 19th century in Europe. Evolved through Tour de France racing culture since 1903. Modern road bikes use advanced materials like carbon fiber.", primaryUse: "Long-distance road riding, racing, fitness cycling, sportives, and time trials.", skillLevel: "Intermediate", terrain: "Road / Paved" },
+                specs: { frameMaterial: "Carbon Fiber / Aluminum / Steel / Titanium", frameGeometry: "Aggressive road geometry with steep head tube and short wheelbase", suspension: "None (rigid)", weight: "7–10 kg", maxLoad: "100–120 kg", wheelSize: '700×25c (700c rim, 25mm tire)', tireType: "Slick / Semi-slick, Clincher or Tubeless", rimType: "Double-wall Alloy / Carbon", gears: "Shimano 105/Ultegra 22-speed (2×11) or SRAM Rival", drivetrain: "Chain drive", gearShifter: "Integrated brake-shift levers (STI/DoubleTap)", crankset: "Compact 50/34T or Standard 52/36T", bottomBracket: "Threaded BSA or Press-fit BB86" },
+                wheels: { frontTire: "700×25c", rearTire: "700×25c", psi: "80–130 PSI (5.5–9 bar)", tubeSize: "700×23-28c Presta valve tube", rimDiameter: "622mm (700c)", rimWidth: "17–21mm internal", spokeCount: "20–24 spokes", valveType: "Presta" },
+                braking: { brakeType: "Disc (hydraulic) or Rim brake (dual-pivot caliper)", frontBrake: "Hydraulic disc or dual-pivot rim", rearBrake: "Hydraulic disc or dual-pivot rim", rotorSize: "140mm / 160mm" },
+                drivetrain: { pedalType: "Clipless (SPD-SL, Look Kéo)", crankArmLength: "170mm / 172.5mm / 175mm", chainStandard: "11-speed chain (KMC/Shimano)", freewheelOrCassette: "Cassette (11-28T or 11-32T)", derailleurType: "Shimano Ultegra / 105 front + rear" },
+                ergonomics: { handlebarType: "Drop", handlebarWidth: "400–440mm", saddleType: "Narrow racing saddle", seatHeight: "680–850mm", ridingPosture: "Aggressive / Aero", footpegPosition: "Clipless pedal — mid position" },
+                components: [{ n: "Fork", d: "Carbon fiber rigid fork with tapered steerer tube" }, { n: "Headset", d: "Integrated sealed bearing headset" }, { n: "Stem", d: "Aluminum 80–120mm, 6° or -6° angle" }, { n: "Handlebars", d: "Compact drop bar, aluminum or carbon" }, { n: "Bar tape", d: "Padded cork or gel bar tape" }, { n: "Brake levers", d: "Integrated STI shifter/brake levers" }, { n: "Shifters", d: "Shimano STI integrated shift/brake" }, { n: "Front derailleur", d: "Braze-on or band clamp, 2-speed" }, { n: "Rear derailleur", d: "11-speed short or medium cage" }, { n: "Chain", d: "11-speed 116 links" }, { n: "Crankset", d: "Compact 50/34T, 170mm arms" }, { n: "Bottom bracket", d: "BSA threaded or PF86" }, { n: "Pedals", d: "Clipless SPD-SL or Look Kéo" }, { n: "Cassette", d: "11-speed 11-28T" }, { n: "Seatpost", d: "27.2mm carbon or alloy" }, { n: "Saddle", d: "Narrow racing saddle with cutout" }, { n: "Frame", d: "Carbon/aluminum, aggressive geometry" }, { n: "Front wheel", d: "700c, 24-spoke, alloy rim, 25c tire, Presta valve" }, { n: "Rear wheel", d: "700c, 24-spoke, alloy rim, 25c tire, Presta, cassette body" }, { n: "Disc rotors", d: "140/160mm center-lock or 6-bolt (if disc)" }, { n: "Brake pads", d: "Resin or metallic disc pads / rubber rim pads" }, { n: "Cables", d: "Stainless steel inner, compression-less housing" }, { n: "Reflectors", d: "Front/rear/wheel reflectors (as per law)" }, { n: "Seatpost clamp", d: "31.8mm quick-release or bolt" }],
+                pricing: { entry: { inr: "₹25,000–50,000", usd: "$300–600" }, mid: { inr: "₹50,000–1,50,000", usd: "$600–1,800" }, premium: { inr: "₹1,50,000–10,00,000+", usd: "$1,800–12,000+" }, brands: "Giant TCR, Trek Domane, Specialized Allez, Canyon Endurace, Bianchi Via Nirone, Merida Scultura" },
+                maintenance: { serviceInterval: "Every 3,000–5,000 km or quarterly", commonIssues: "Chain stretch, brake pad wear, tire punctures, cable fraying, bottom bracket creak", keyTasks: "Lubricate chain weekly, check tire pressure before every ride, inspect brake pads monthly, replace cables annually, tune derailleurs seasonally" },
+                pros: ["Extremely fast on paved roads", "Lightweight and efficient", "Excellent for fitness and endurance", "Wide range of price points", "Strong racing and community culture"],
+                cons: ["Uncomfortable on rough roads", "Aggressive riding position may cause strain", "No suspension — harsh ride", "Tires puncture easily", "Not suitable for off-road"],
+                idealFor: { riderProfile: "Fitness enthusiasts, competitive racers, long-distance riders, commuters on paved roads", bestScenarios: "Road racing, century rides, sportives, daily road commuting, group rides" }
+            },
+
+            {
+                id: "mountain-bike", name: "Mountain Bike", nicknames: "MTB, Off-roader, Trail Bike", category: "non-motorized",
+                overview: { origin: "Invented in 1970s Marin County, California by riders modifying cruiser bikes for off-road trails. First purpose-built MTB by Joe Breeze in 1977.", primaryUse: "Off-road trail riding, cross-country, downhill, enduro racing, and adventure riding.", skillLevel: "Beginner to Expert", terrain: "Off-road / Trail / Mixed" },
+                specs: { frameMaterial: "Aluminum / Carbon Fiber / Steel", frameGeometry: "Slack head angle, long wheelbase for stability on rough terrain", suspension: "Front fork (Hardtail) or Full suspension (Front + Rear)", weight: "10–15 kg", maxLoad: "120–140 kg", wheelSize: '27.5"×2.3" or 29"×2.25"', tireType: "Knobby / Tubeless-ready", rimType: "Double-wall Alloy, wide profile (30mm+ internal)", gears: "Shimano Deore/SLX 12-speed (1×12) or SRAM Eagle", drivetrain: "Chain drive", gearShifter: "Thumb shifter (trigger)", crankset: "Single 30T–34T narrow-wide chainring", bottomBracket: "Threaded BSA or Press-fit" },
+                wheels: { frontTire: '29"×2.25" or 27.5"×2.3"', rearTire: '29"×2.25" or 27.5"×2.3"', psi: "25–35 PSI (1.7–2.4 bar)", tubeSize: '29"×2.0-2.4" Presta tube (or tubeless)', rimDiameter: "622mm (29er) or 584mm (27.5)", rimWidth: "28–35mm internal", spokeCount: "28–32 spokes", valveType: "Presta" },
+                braking: { brakeType: "Disc (hydraulic)", frontBrake: "Hydraulic disc, 4-piston", rearBrake: "Hydraulic disc, 2-piston", rotorSize: "180mm front / 160mm rear" },
+                drivetrain: { pedalType: "Flat or Clipless (SPD)", crankArmLength: "170mm / 175mm", chainStandard: "12-speed chain", freewheelOrCassette: "Cassette (10-52T wide range)", derailleurType: "Rear only — SRAM Eagle or Shimano SLX/Deore" },
+                ergonomics: { handlebarType: "Riser / Flat", handlebarWidth: "760–800mm", saddleType: "Wide padded trail saddle", seatHeight: "650–800mm (dropper post adjustable)", ridingPosture: "Upright / Neutral", footpegPosition: "Flat pedals or SPD clipless — mid position" },
+                components: [{ n: "Fork", d: "100–160mm travel air/coil suspension fork (RockShox, Fox)" }, { n: "Headset", d: "Tapered sealed cartridge bearing headset" }, { n: "Stem", d: "Short 35–50mm, 0° angle" }, { n: "Handlebars", d: "Wide 780mm riser bar, aluminum or carbon" }, { n: "Grips", d: "Lock-on rubber grips" }, { n: "Brake levers", d: "Hydraulic disc brake levers" }, { n: "Shifters", d: "Trigger shifter (1×12)" }, { n: "Rear derailleur", d: "12-speed clutch derailleur" }, { n: "Chain", d: "12-speed with quick link" }, { n: "Crankset", d: "Single 32T narrow-wide, 170mm" }, { n: "Bottom bracket", d: "BSA threaded" }, { n: "Pedals", d: "Flat platform or SPD clipless" }, { n: "Cassette", d: "12-speed 10-52T" }, { n: "Seatpost", d: "30.9/31.6mm dropper post" }, { n: "Saddle", d: "Trail saddle, moderate padding" }, { n: "Frame", d: "Aluminum/carbon, trail geometry" }, { n: "Front wheel", d: "29er, 32-spoke, wide alloy rim, tubeless tire, Presta" }, { n: "Rear wheel", d: "29er, 32-spoke, wide alloy rim, tubeless tire, Presta, Boost hub" }, { n: "Disc rotors", d: "180/160mm 6-bolt" }, { n: "Mudguards", d: "Clip-on fender (optional)" }, { n: "Kickstand", d: "Not typically fitted" }, { n: "Reflectors", d: "Removable spoke reflectors" }],
+                pricing: { entry: { inr: "₹20,000–50,000", usd: "$300–600" }, mid: { inr: "₹50,000–2,00,000", usd: "$600–2,500" }, premium: { inr: "₹2,00,000–8,00,000+", usd: "$2,500–10,000+" }, brands: "Trek Marlin/Fuel, Giant Talon/Trance, Specialized Rockhopper/Stumpjumper, Canyon Spectral, Scott Spark, Montra Rock" },
+                maintenance: { serviceInterval: "Every 1,000–2,000 km or after muddy rides", commonIssues: "Suspension seal wear, chain stretch, brake rotor warping, tubeless sealant drying, pivot bearing wear", keyTasks: "Clean after every off-road ride, service suspension every 50–100 hours, bleed brakes biannually, top up tubeless sealant every 3 months, check bolt torques" },
+                pros: ["Excellent off-road capability", "Suspension absorbs rough terrain", "Very versatile — trail, XC, enduro", "Strong and durable build", "Fun and adventurous riding"],
+                cons: ["Heavier than road bikes", "Slower on paved roads", "Suspension requires regular service", "Higher maintenance cost", "Knobby tires have more rolling resistance on tarmac"],
+                idealFor: { riderProfile: "Adventure seekers, trail riders, off-road enthusiasts, mountain explorers", bestScenarios: "Forest trails, mountain paths, cross-country racing, enduro competitions, adventure riding" }
+            },
+
+            {
+                id: "hybrid-bike", name: "Hybrid / City Bike", nicknames: "Urban Bike, Commuter Bike, Fitness Bike", category: "non-motorized",
+                overview: { origin: "Developed in the 1990s as a cross between road and mountain bikes. Designed to combine comfort of MTB positioning with road bike speed for urban use.", primaryUse: "Urban commuting, fitness rides, leisure cycling, light trail riding.", skillLevel: "Beginner", terrain: "Urban / Road / Light Trail" },
+                specs: { frameMaterial: "Aluminum / Steel", frameGeometry: "Relaxed upright geometry with medium wheelbase", suspension: "None or Front fork (50–63mm travel)", weight: "11–14 kg", maxLoad: "110–130 kg", wheelSize: '700×35c–42c or 28"', tireType: "Semi-slick / Puncture-resistant", rimType: "Double-wall Alloy", gears: "Shimano Acera/Altus 21–24 speed (3×7/8) or 1×9", drivetrain: "Chain drive", gearShifter: "Trigger or twist grip", crankset: "Triple 48/38/28T or 42/34/24T", bottomBracket: "Cartridge BSA threaded" },
+                wheels: { frontTire: "700×35c–42c", rearTire: "700×35c–42c", psi: "50–70 PSI (3.4–4.8 bar)", tubeSize: "700×35-43c Schrader tube", rimDiameter: "622mm (700c)", rimWidth: "19–23mm internal", spokeCount: "32–36 spokes", valveType: "Schrader" },
+                braking: { brakeType: "Disc (mechanical or hydraulic) or V-brake", frontBrake: "Mechanical disc or V-brake", rearBrake: "Mechanical disc or V-brake", rotorSize: "160mm (if disc)" },
+                drivetrain: { pedalType: "Flat platform with reflectors", crankArmLength: "170mm", chainStandard: "7/8-speed chain", freewheelOrCassette: "Cassette (11-34T) or Freewheel", derailleurType: "Shimano Altus/Acera front + rear" },
+                ergonomics: { handlebarType: "Flat", handlebarWidth: "600–640mm", saddleType: "Comfort saddle with moderate padding", seatHeight: "700–900mm", ridingPosture: "Upright", footpegPosition: "Platform pedals — mid position" },
+                components: [{ n: "Fork", d: "Rigid steel/alloy or 50mm suspension fork" }, { n: "Headset", d: "Semi-integrated sealed bearing" }, { n: "Stem", d: "Adjustable angle 90–110mm" }, { n: "Handlebars", d: "Flat bar 620mm aluminum" }, { n: "Grips", d: "Ergonomic rubber grips" }, { n: "Brake levers", d: "2-finger alloy levers" }, { n: "Shifters", d: "Trigger or twist grip (3×8)" }, { n: "Front derailleur", d: "Band clamp triple" }, { n: "Rear derailleur", d: "8-speed medium cage" }, { n: "Chain", d: "8-speed 116 links" }, { n: "Crankset", d: "Triple 48/38/28T forged alloy" }, { n: "Bottom bracket", d: "Cartridge sealed BSA" }, { n: "Pedals", d: "Rubber platform with reflectors" }, { n: "Cassette", d: "8-speed 11-34T" }, { n: "Seatpost", d: "27.2mm alloy" }, { n: "Saddle", d: "Comfort saddle with springs or gel" }, { n: "Frame", d: "Aluminum step-through or diamond" }, { n: "Front wheel", d: "700c, 36-spoke, alloy rim, 38c semi-slick, Schrader" }, { n: "Rear wheel", d: "700c, 36-spoke, alloy rim, 38c semi-slick, Schrader" }, { n: "Mudguards", d: "Full-length clip-on fenders" }, { n: "Carrier", d: "Rear rack with spring clamp" }, { n: "Kickstand", d: "Center-mount alloy kickstand" }, { n: "Bell", d: "Alloy ping bell" }, { n: "Headlight", d: "Battery LED front light" }, { n: "Taillight", d: "LED rear blinker" }, { n: "Reflectors", d: "Full reflector set (wheel, pedal, front, rear)" }],
+                pricing: { entry: { inr: "₹12,000–25,000", usd: "$200–350" }, mid: { inr: "₹25,000–60,000", usd: "$350–700" }, premium: { inr: "₹60,000–1,50,000", usd: "$700–1,800" }, brands: "Trek FX, Giant Escape, Btwin Riverside, Hercules Roadeo, Montra Trance, Cannondale Quick" },
+                maintenance: { serviceInterval: "Every 3–6 months or 2,000 km", commonIssues: "Tire punctures, brake pad wear, chain rust, gear cable stretch, grip deterioration", keyTasks: "Inflate tires weekly, lubricate chain biweekly, adjust brakes monthly, check gear indexing, clean frame regularly" },
+                pros: ["Very comfortable upright riding", "Affordable and accessible", "Great for city commuting", "Versatile — road and light trails", "Easy to learn and ride"],
+                cons: ["Not specialized for any terrain", "Heavier build than road bikes", "Slower than road bikes on tarmac", "Not capable on technical trails", "Components wear faster at low price points"],
+                idealFor: { riderProfile: "Commuters, casual riders, beginners, fitness cyclists, urban dwellers", bestScenarios: "Daily commuting, weekend leisure rides, fitness cycling, errands around town" }
+            },
+
+            {
+                id: "bmx-bike", name: "BMX Bike", nicknames: "Bicycle Motocross, Trick Bike, Stunt Bike", category: "non-motorized",
+                overview: { origin: "Born in late 1960s Southern California when kids raced bikes on dirt tracks imitating motocross. Formalized as BMX racing in the 1970s. Became an Olympic sport in 2008.", primaryUse: "Trick riding, freestyle stunts, dirt jumping, BMX racing, skatepark riding.", skillLevel: "Beginner to Expert", terrain: "Urban / Skatepark / Dirt Track" },
+                specs: { frameMaterial: "Chromoly Steel / Hi-tensile Steel", frameGeometry: "Small compact frame with short wheelbase, low standover", suspension: "None (rigid)", weight: "9–13 kg", maxLoad: "100–120 kg", wheelSize: '20"×2.1"–2.4"', tireType: "Knobby (dirt) / Semi-slick (street/park)", rimType: "Double-wall Alloy, 36H", gears: "Single speed (fixed gear ratio)", drivetrain: "Chain drive", gearShifter: "None (single speed)", crankset: "Single 25T–28T sprocket, 3-piece or tubular", bottomBracket: "Sealed mid-BB, 19mm or 22mm spindle" },
+                wheels: { frontTire: '20"×2.1"–2.4"', rearTire: '20"×2.1"–2.4"', psi: "40–65 PSI (2.8–4.5 bar)", tubeSize: '20"×1.75-2.35" Schrader tube', rimDiameter: "406mm (20 inch)", rimWidth: "32–38mm", spokeCount: "36 spokes", valveType: "Schrader" },
+                braking: { brakeType: "U-brake / Rim brake (rear only) or Brakeless", frontBrake: "Usually none", rearBrake: "U-brake or caliper with gyro/detangler", rotorSize: "N/A" },
+                drivetrain: { pedalType: "Flat BMX platform (plastic or alloy)", crankArmLength: "175mm", chainStandard: "Single-speed BMX chain (1/2\" × 1/8\")", freewheelOrCassette: "Freewheel (9T–16T driver) or Cassette hub", derailleurType: "None" },
+                ergonomics: { handlebarType: "Riser (2-piece or 4-piece)", handlebarWidth: "700–760mm", saddleType: "Small slim BMX saddle (pivotal or railed)", seatHeight: "Variable — low (freestyle) or mid (racing)", ridingPosture: "Upright / Standing", footpegPosition: "Platform pedals + optional axle pegs" },
+                components: [{ n: "Fork", d: "Chromoly BMX fork, threadless 1-1/8\"" }, { n: "Headset", d: "Sealed integrated or internal headset" }, { n: "Stem", d: "Top-load or front-load, 50mm" }, { n: "Handlebars", d: "Hi-rise 2-piece or 4-piece bar, 8.5–9\" rise" }, { n: "Grips", d: "Flanged or flangeless mushroom grips" }, { n: "Brake levers", d: "Single lever (rear only) or none" }, { n: "Chain", d: "Half-link or standard BMX chain" }, { n: "Crankset", d: "3-piece tubular chromoly, 175mm, 25T sprocket" }, { n: "Bottom bracket", d: "Sealed mid-BB 19mm" }, { n: "Pedals", d: "Nylon or alloy platform with pins" }, { n: "Seatpost", d: "Pivotal or railed slim post" }, { n: "Saddle", d: "Slim pivotal BMX seat" }, { n: "Frame", d: "Chromoly or hi-ten steel, 20–21\" top tube" }, { n: "Front wheel", d: "20\", 36-spoke, double-wall rim, Schrader" }, { n: "Rear wheel", d: "20\", 36-spoke, double-wall rim, 9T driver, Schrader" }, { n: "Axle pegs", d: "Steel or alloy pegs for grinding (optional)" }],
+                pricing: { entry: { inr: "₹8,000–20,000", usd: "$150–300" }, mid: { inr: "₹20,000–50,000", usd: "$300–600" }, premium: { inr: "₹50,000–1,50,000+", usd: "$600–1,800+" }, brands: "Haro, GT Bicycles, WeThePeople, Kink, Sunday, Mongoose, Cult, BSD" },
+                maintenance: { serviceInterval: "Monthly or after heavy sessions", commonIssues: "Chain stretch, spoke breakage, hub bearing wear, headset loosening, grip wear", keyTasks: "Check chain tension regularly, tighten headset and hub bolts, replace worn tires, inspect frame for cracks, grease bearings quarterly" },
+                pros: ["Extreme fun for tricks and stunts", "Very durable and tough build", "Lightweight for its strength", "Simple single-speed mechanics", "Strong riding community and culture"],
+                cons: ["Not suitable for long distances", "Single speed limits versatility", "Small size uncomfortable for tall riders", "No gears for climbing hills", "Minimal or no brakes (freestyle)"],
+                idealFor: { riderProfile: "Stunt riders, young riders, skatepark enthusiasts, thrill seekers, BMX racers", bestScenarios: "Skatepark sessions, dirt jumping, street riding, flatland tricks, BMX track racing" }
+            },
+
+            {
+                id: "folding-bike", name: "Folding Bike", nicknames: "Folder, Compact Bike, Commuter Folder", category: "non-motorized",
+                overview: { origin: "First folding bikes appeared in the early 1900s for military use. Brompton (1975, UK) popularized the modern folder. Now essential for multi-modal urban commuting.", primaryUse: "Urban commuting with public transit, portable cycling, space-constrained storage.", skillLevel: "Beginner", terrain: "Urban / Road" },
+                specs: { frameMaterial: "Aluminum / Steel / Chromoly", frameGeometry: "Compact fold design, low center hinge, small wheels", suspension: "None or integrated flex", weight: "9–14 kg", maxLoad: "90–110 kg", wheelSize: '16"–20" × 1.35"–1.95"', tireType: "Slick / Semi-slick puncture-proof", rimType: "Single-wall or Double-wall Alloy", gears: "3-speed internal hub or 6–7 speed derailleur or single speed", drivetrain: "Chain drive", gearShifter: "Twist grip or trigger (if geared)", crankset: "Single 50–54T chainring", bottomBracket: "Cartridge sealed BSA" },
+                wheels: { frontTire: '16" or 20" × 1.35"–1.95"', rearTire: '16" or 20" × 1.35"–1.95"', psi: "60–100 PSI (4–7 bar)", tubeSize: '16" or 20" Schrader or Presta tube', rimDiameter: "305mm (16\") or 406mm (20\")", rimWidth: "17–21mm", spokeCount: "20–28 spokes", valveType: "Schrader or Presta" },
+                braking: { brakeType: "V-brake / Rim brake / Disc (mechanical)", frontBrake: "V-brake or caliper", rearBrake: "V-brake or caliper", rotorSize: "140mm (if disc)" },
+                drivetrain: { pedalType: "Folding platform pedals", crankArmLength: "170mm", chainStandard: "Single-speed or 6/7-speed chain", freewheelOrCassette: "Freewheel (6/7-speed) or Internal hub", derailleurType: "Rear only (Shimano Tourney) or internal hub gear" },
+                ergonomics: { handlebarType: "Flat or M-type riser", handlebarWidth: "540–580mm", saddleType: "Compact comfort saddle", seatHeight: "700–950mm (long telescoping seatpost)", ridingPosture: "Upright", footpegPosition: "Folding pedals — mid position" },
+                components: [{ n: "Fork", d: "Steel or alloy rigid fork with integrated mudguard mount" }, { n: "Headset", d: "Threaded or threadless sealed" }, { n: "Stem", d: "Telescoping folding stem with quick-release" }, { n: "Handlebars", d: "Flat or M-type bar with fold mechanism" }, { n: "Grips", d: "Ergonomic rubber grips" }, { n: "Brake levers", d: "Alloy 2-finger levers" }, { n: "Chain", d: "6/7-speed or single chain with guard" }, { n: "Crankset", d: "Single 52T with chain guard" }, { n: "Bottom bracket", d: "Cartridge sealed" }, { n: "Pedals", d: "Folding alloy pedals" }, { n: "Seatpost", d: "Telescoping 33.9mm with quick-release" }, { n: "Saddle", d: "Compact comfort saddle" }, { n: "Frame", d: "Aluminum/steel with central hinge and latch" }, { n: "Front wheel", d: "16/20\", alloy rim, slick tire" }, { n: "Rear wheel", d: "16/20\", alloy rim, slick tire, hub gear or freewheel" }, { n: "Mudguards", d: "Integrated full-coverage fenders" }, { n: "Kickstand", d: "Integrated folding kickstand" }, { n: "Rear rack", d: "Small integrated carrier (Brompton style)" }, { n: "Bell", d: "Compact brass/alloy bell" }],
+                pricing: { entry: { inr: "₹15,000–35,000", usd: "$250–450" }, mid: { inr: "₹35,000–80,000", usd: "$450–1,000" }, premium: { inr: "₹80,000–2,50,000+", usd: "$1,000–3,000+" }, brands: "Brompton, Dahon, Tern, Btwin Tilt, Firefox Flip, Oyama" },
+                maintenance: { serviceInterval: "Every 6 months or 2,000 km", commonIssues: "Hinge wear, seatpost slipping, small tire punctures, chain dropping, cable stretch", keyTasks: "Lubricate hinges and latches regularly, check fold mechanism tightness, maintain tire pressure (small tires lose air faster), clean chain frequently" },
+                pros: ["Ultra-portable and foldable", "Perfect for multi-modal commuting", "Easy to store in small spaces", "Allowed on public transit", "Lightweight models available"],
+                cons: ["Smaller wheels = less stable at speed", "Less comfortable on long rides", "Premium folders are expensive", "Limited off-road capability", "Parts can be proprietary"],
+                idealFor: { riderProfile: "Urban commuters, public transit users, travelers, apartment dwellers, multi-modal commuters", bestScenarios: "Train-bike commuting, office storage, RV/boat travel, last-mile connectivity" }
+            },
+
+            {
+                id: "gravel-bike", name: "Gravel Bike", nicknames: "Adventure Road Bike, All-Road Bike, Grinder", category: "non-motorized",
+                overview: { origin: "Emerged in 2010s USA from gravel road racing culture in Kansas and Midwest. Combines road bike speed with off-road capability for mixed-surface adventure riding.", primaryUse: "Mixed-surface riding: gravel roads, dirt paths, light trails, bikepacking, and long-distance adventure.", skillLevel: "Intermediate", terrain: "Mixed / Gravel / Light Off-road" },
+                specs: { frameMaterial: "Carbon Fiber / Aluminum / Steel / Titanium", frameGeometry: "Endurance road geometry with slack head angle, long chainstays for stability", suspension: "None (rigid) or micro-suspension (Future Shock, IsoSpeed)", weight: "8–11 kg", maxLoad: "120–140 kg", wheelSize: '700×37c–45c or 650b×47c', tireType: "Semi-knobby / Tubeless-ready gravel tire", rimType: "Double-wall Alloy or Carbon, wide (21–25mm internal)", gears: "Shimano GRX 22-speed (2×11) or SRAM Rival XPLR 1×12", drivetrain: "Chain drive", gearShifter: "Integrated STI / DoubleTap brake-shift levers", crankset: "Gravel-specific 46/30T sub-compact or 40T single", bottomBracket: "BSA threaded or T47" },
+                wheels: { frontTire: "700×40c or 650b×47c", rearTire: "700×40c or 650b×47c", psi: "30–50 PSI (2–3.4 bar)", tubeSize: "700×35-45c Presta (or tubeless)", rimDiameter: "622mm (700c) or 584mm (650b)", rimWidth: "21–25mm internal", spokeCount: "28–32 spokes", valveType: "Presta" },
+                braking: { brakeType: "Disc (hydraulic)", frontBrake: "Hydraulic disc, flat-mount", rearBrake: "Hydraulic disc, flat-mount", rotorSize: "160mm front and rear" },
+                drivetrain: { pedalType: "Clipless (SPD dual-sided)", crankArmLength: "170mm / 172.5mm", chainStandard: "11 or 12-speed chain", freewheelOrCassette: "Cassette (11-34T or 10-44T)", derailleurType: "Shimano GRX or SRAM Rival/Force XPLR clutch rear" },
+                ergonomics: { handlebarType: "Flared drop", handlebarWidth: "420–460mm (with 12–16° flare)", saddleType: "Endurance comfort saddle", seatHeight: "680–850mm", ridingPosture: "Neutral / Moderate", footpegPosition: "SPD clipless — mid position" },
+                components: [{ n: "Fork", d: "Carbon rigid fork with triple cage mounts" }, { n: "Headset", d: "Tapered sealed integrated" }, { n: "Stem", d: "Alloy 80–100mm" }, { n: "Handlebars", d: "Flared drop bar 440mm (16° flare)" }, { n: "Bar tape", d: "Extra-cushion gel/cork tape" }, { n: "Brake levers", d: "Shimano GRX STI levers" }, { n: "Shifters", d: "Integrated GRX or SRAM XPLR" }, { n: "Front derailleur", d: "GRX front (if 2×) or none" }, { n: "Rear derailleur", d: "Clutch-type gravel derailleur" }, { n: "Chain", d: "11/12-speed" }, { n: "Crankset", d: "Sub-compact 46/30T" }, { n: "Bottom bracket", d: "BSA threaded" }, { n: "Pedals", d: "Shimano SPD dual-sided clipless" }, { n: "Cassette", d: "11-34T or wider" }, { n: "Seatpost", d: "27.2mm with setback" }, { n: "Saddle", d: "Wide endurance saddle" }, { n: "Frame", d: "Carbon/aluminum with rack/fender mounts" }, { n: "Front wheel", d: "700c/650b, 28-spoke, tubeless-ready" }, { n: "Rear wheel", d: "700c/650b, 28-spoke, tubeless-ready, thru-axle" }, { n: "Disc rotors", d: "160mm flat-mount" }, { n: "Mudguards", d: "Fender mounts available" }, { n: "Carrier", d: "Rack and triple cage mounts" }, { n: "Reflectors", d: "Minimal, light mounts standard" }],
+                pricing: { entry: { inr: "₹50,000–1,00,000", usd: "$600–1,200" }, mid: { inr: "₹1,00,000–2,50,000", usd: "$1,200–3,000" }, premium: { inr: "₹2,50,000–7,00,000+", usd: "$3,000–8,000+" }, brands: "Trek Checkpoint, Specialized Diverge, Canyon Grail, Giant Revolt, Cannondale Topstone, Cervélo Áspero" },
+                maintenance: { serviceInterval: "Every 2,000–3,000 km", commonIssues: "Tubeless sealant drying, brake pad contamination, cable stretch, bottom bracket creak", keyTasks: "Top up sealant every 3 months, clean drivetrain after dusty/wet rides, bleed brakes annually, inspect frame mounts for stress cracks" },
+                pros: ["Extremely versatile — road + dirt", "Comfortable endurance geometry", "Tubeless tires resist punctures", "Mounts for bikepacking gear", "Fun mixed-terrain adventure riding"],
+                cons: ["Not as fast as pure road bike on tarmac", "Not as capable as MTB on technical trails", "Premium models are expensive", "Heavier than road bikes", "Niche market — fewer service options"],
+                idealFor: { riderProfile: "Adventure riders, bikepackers, mixed-terrain explorers, endurance cyclists", bestScenarios: "Gravel races, bikepacking tours, mixed-surface commuting, farm road exploration, audax riding" }
+            },
+
+            {
+                id: "cruiser-bike", name: "Cruiser Bike", nicknames: "Beach Cruiser, Comfort Cruiser, Boardwalk Bike", category: "non-motorized",
+                overview: { origin: "Originated in 1930s–1950s America, inspired by motorcycle styling. Popular along California beaches. Known for relaxed riding and retro aesthetic.", primaryUse: "Leisurely casual riding, beach boardwalks, neighborhood cruising, short errands.", skillLevel: "Beginner", terrain: "Road / Urban / Flat terrain" },
+                specs: { frameMaterial: "Steel / Aluminum", frameGeometry: "Swept-back cruiser geometry, long wheelbase, low seat", suspension: "None or springer front fork", weight: "14–20 kg", maxLoad: "110–130 kg", wheelSize: '26"×2.125" (balloon tire)', tireType: "Balloon / Semi-slick wide profile", rimType: "Single-wall or Double-wall Steel/Alloy", gears: "Single speed or 3–7 speed internal/derailleur", drivetrain: "Chain drive", gearShifter: "Coaster brake (back-pedal) or twist grip", crankset: "Single 44T steel chainring with guard", bottomBracket: "Loose-ball or cartridge BSA" },
+                wheels: { frontTire: '26"×2.125"', rearTire: '26"×2.125"', psi: "30–45 PSI (2–3 bar)", tubeSize: '26"×1.75-2.35" Schrader tube', rimDiameter: "559mm (26\")", rimWidth: "25–30mm", spokeCount: "36 spokes", valveType: "Schrader" },
+                braking: { brakeType: "Coaster brake (rear) / V-brake / Rim brake", frontBrake: "None or caliper rim brake", rearBrake: "Coaster brake (back-pedal)", rotorSize: "N/A" },
+                drivetrain: { pedalType: "Wide block/platform pedals", crankArmLength: "170mm", chainStandard: "Single-speed wide chain (1/2\" × 1/8\")", freewheelOrCassette: "Coaster hub or single-speed freewheel", derailleurType: "None or basic rear derailleur (if 7-speed)" },
+                ergonomics: { handlebarType: "Swept-back / Ape hanger", handlebarWidth: "620–700mm", saddleType: "Wide padded spring saddle (tractor style)", seatHeight: "700–900mm", ridingPosture: "Upright / Laid-back", footpegPosition: "Forward pedal position — feet in front of hips" },
+                components: [{ n: "Fork", d: "Curved steel fork or springer suspension" }, { n: "Headset", d: "Threaded standard 1\" headset" }, { n: "Stem", d: "Long gooseneck quill stem" }, { n: "Handlebars", d: "Swept-back cruiser bar or ape hanger" }, { n: "Grips", d: "Balloon rubber grips" }, { n: "Chain", d: "Single-speed wide chain with guard" }, { n: "Crankset", d: "Single 44T steel with plastic guard" }, { n: "Bottom bracket", d: "Cup and cone or cartridge" }, { n: "Pedals", d: "Wide block rubber pedals" }, { n: "Seatpost", d: "25.4mm long steel post" }, { n: "Saddle", d: "Extra-wide spring saddle" }, { n: "Frame", d: "Curved steel cruiser frame" }, { n: "Front wheel", d: "26\", 36-spoke, wide steel/alloy rim, balloon tire, Schrader" }, { n: "Rear wheel", d: "26\", 36-spoke, coaster brake hub, balloon tire, Schrader" }, { n: "Kickstand", d: "Wide steel kickstand" }, { n: "Fenders", d: "Full-coverage color-matched fenders" }, { n: "Bell", d: "Chrome ding-dong bell" }, { n: "Chainguard", d: "Full steel chain guard" }, { n: "Headlight", d: "Retro bullet headlight (optional)" }],
+                pricing: { entry: { inr: "₹10,000–20,000", usd: "$150–300" }, mid: { inr: "₹20,000–45,000", usd: "$300–550" }, premium: { inr: "₹45,000–1,00,000+", usd: "$550–1,200+" }, brands: "Electra, Schwinn, Firmstrong, Giant Simple, Huffy, Nirve" },
+                maintenance: { serviceInterval: "Every 6–12 months", commonIssues: "Coaster brake wear, chain rust, tire dry rot, loose headset, fender rattling", keyTasks: "Keep chain lubed and rust-free, maintain tire pressure, adjust coaster brake, tighten headset bearings, clean and wax frame" },
+                pros: ["Extremely comfortable and easy to ride", "Classic retro aesthetic", "Very low maintenance (single speed)", "Wide stable tires", "Great for leisure and casual riding"],
+                cons: ["Very heavy", "Slow — not for fitness or speed", "Limited to flat terrain (single speed)", "Difficult to climb hills", "Not suitable for long distances"],
+                idealFor: { riderProfile: "Casual riders, beach-goers, vintage style enthusiasts, seniors, recreational riders", bestScenarios: "Beach boardwalk rides, neighborhood cruising, sunset rides, resort/hotel cycling" }
+            },
+
+            {
+                id: "adult-tricycle", name: "Tricycle (Adult)", nicknames: "Trike, Adult Trike, Three-wheeler, Cargo Trike", category: "non-motorized",
+                overview: { origin: "Three-wheeled cycles date back to 1655 (a disabled German watchmaker). Modern adult trikes gained popularity in the 20th century for seniors and cargo use.", primaryUse: "Stable cycling for seniors, people with balance issues, cargo transport, and recreational riding.", skillLevel: "Beginner", terrain: "Urban / Road / Flat" },
+                specs: { frameMaterial: "Steel / Aluminum", frameGeometry: "Low step-through frame with wide rear axle", suspension: "None", weight: "20–30 kg", maxLoad: "150–200 kg (including cargo)", wheelSize: '24"–26" front, 20"–24" rear pair', tireType: "Semi-slick / Puncture-resistant", rimType: "Single-wall or Double-wall Steel/Alloy", gears: "Single speed or 6–7 speed derailleur", drivetrain: "Chain drive", gearShifter: "Twist grip or trigger", crankset: "Single 38T–44T steel chainring", bottomBracket: "Cartridge BSA" },
+                wheels: { frontTire: '24" or 26" × 1.75"', rearTire: '20" or 24" × 1.75" (×2)', psi: "40–55 PSI (2.8–3.8 bar)", tubeSize: 'Matching diameter Schrader tubes', rimDiameter: "507/540/559mm", rimWidth: "20–25mm", spokeCount: "36 front, 28 rear (each)", valveType: "Schrader" },
+                braking: { brakeType: "V-brake or Drum brake or Disc (mechanical)", frontBrake: "V-brake or caliper", rearBrake: "Band/drum brakes on rear axle", rotorSize: "N/A (or 160mm if disc)" },
+                drivetrain: { pedalType: "Wide rubber platform pedals", crankArmLength: "170mm", chainStandard: "Single or 6/7-speed chain", freewheelOrCassette: "Freewheel (6-speed or single)", derailleurType: "Rear only (Shimano Tourney) or none" },
+                ergonomics: { handlebarType: "Swept-back / Tiller style", handlebarWidth: "580–640mm", saddleType: "Extra-wide comfort saddle with backrest option", seatHeight: "750–950mm (low step-over)", ridingPosture: "Upright / Laid-back", footpegPosition: "Standard mid position or forward (recumbent trike)" },
+                components: [{ n: "Fork", d: "Rigid steel fork" }, { n: "Headset", d: "Threaded 1\" standard" }, { n: "Handlebars", d: "Swept-back comfort bar" }, { n: "Grips", d: "Oversized soft rubber grips" }, { n: "Chain", d: "Standard or 6-speed chain with guard" }, { n: "Crankset", d: "Single 40T with full chain guard" }, { n: "Pedals", d: "Extra-wide rubber block pedals" }, { n: "Seatpost", d: "Steel 28.6mm" }, { n: "Saddle", d: "Extra-wide saddle with springs, optional backrest" }, { n: "Frame", d: "Step-through steel frame with rear axle housing" }, { n: "Front wheel", d: "24/26\", 36-spoke, Schrader" }, { n: "Rear wheels", d: "20/24\" pair, independent or differential hub, Schrader" }, { n: "Rear basket", d: "Large wire or plastic cargo basket between rear wheels" }, { n: "Mudguards", d: "Front and rear full fenders" }, { n: "Kickstand", d: "Not needed (inherently stable)" }, { n: "Flag", d: "Orange safety flag on pole (optional)" }],
+                pricing: { entry: { inr: "₹10,000–25,000", usd: "$200–400" }, mid: { inr: "₹25,000–50,000", usd: "$400–700" }, premium: { inr: "₹50,000–1,50,000+", usd: "$700–1,500+" }, brands: "Schwinn Meridian, Mobo Triton, Kent Alameda, Barbella, Vanell" },
+                maintenance: { serviceInterval: "Every 6–12 months", commonIssues: "Rear axle bearing wear, chain stretch, brake adjustment, tire wear (3 tires), wheel alignment", keyTasks: "Grease rear axle bearings, keep chain lubed, adjust brakes, check tire pressure on all three wheels, inspect frame welds" },
+                pros: ["Extremely stable — no balancing needed", "Large cargo carrying capacity", "Perfect for seniors and mobility-challenged", "No risk of tipping over when stopped", "Low step-through entry"],
+                cons: ["Very heavy and bulky", "Slow and limited speed", "Wide — difficult in narrow spaces", "Cannot lean into turns", "Limited availability and part sourcing"],
+                idealFor: { riderProfile: "Seniors, people with balance difficulties, cargo transporters, disabled riders, delivery workers", bestScenarios: "Grocery shopping trips, neighborhood riding, cargo delivery, therapeutic cycling, garden/farm short transport" }
+            },
+
+            {
+                id: "kids-bicycle", name: "Kids Bicycle", nicknames: "Child's Bike, Kiddie Bike, Training Wheel Bike", category: "non-motorized",
+                overview: { origin: "Children's bicycles evolved alongside adult bikes from the 1800s. Training wheels became standard in the 1950s. Modern kids bikes include balance bikes (no pedals) for toddlers.", primaryUse: "Learning to ride, recreational cycling for children ages 3–12, school commuting.", skillLevel: "Beginner", terrain: "Urban / Road / Park" },
+                specs: { frameMaterial: "Steel / Aluminum (lightweight kids' models)", frameGeometry: "Low standover, short reach, compact proportions", suspension: "None (rigid) — some large kids bikes have basic fork suspension", weight: "5–12 kg (varies by wheel size)", maxLoad: "40–80 kg", wheelSize: '12"–24" (age-dependent: 12" = 2-4yrs, 16" = 4-6yrs, 20" = 6-9yrs, 24" = 9-12yrs)', tireType: "Semi-slick or knobby rubber", rimType: "Single-wall Steel or Alloy", gears: "Single speed (12\"–20\") or 6–7 speed (24\")", drivetrain: "Chain drive", gearShifter: "None or twist grip (24\" bikes)", crankset: "Single small chainring (28–36T)", bottomBracket: "Loose-ball or basic cartridge" },
+                wheels: { frontTire: '12"–24" × 1.75"–2.0"', rearTire: '12"–24" × 1.75"–2.0"', psi: "30–45 PSI (2–3 bar)", tubeSize: "Matching wheel size, Schrader valve", rimDiameter: "203–507mm (varies by size)", rimWidth: "18–22mm", spokeCount: "20–28 spokes (varies by size)", valveType: "Schrader" },
+                braking: { brakeType: "Coaster brake / V-brake / Caliper", frontBrake: "Hand caliper (16\"+) or none", rearBrake: "Coaster brake (back-pedal) or V-brake", rotorSize: "N/A" },
+                drivetrain: { pedalType: "Rubber block pedals (non-slip, kid-safe)", crankArmLength: "89–152mm (size-dependent)", chainStandard: "Single-speed wide chain with full guard", freewheelOrCassette: "Coaster hub or single freewheel", derailleurType: "None (12\"–20\") or basic rear (24\")" },
+                ergonomics: { handlebarType: "Riser / BMX style", handlebarWidth: "400–520mm (size-dependent)", saddleType: "Small padded child's saddle", seatHeight: "400–700mm (adjustable)", ridingPosture: "Upright", footpegPosition: "Standard — feet flat on ground recommended for sizing" },
+                components: [{ n: "Fork", d: "Rigid steel fork" }, { n: "Handlebars", d: "BMX-style riser bar (child-sized)" }, { n: "Grips", d: "Soft rubber grips with end caps" }, { n: "Chain", d: "Single-speed with full plastic chain guard" }, { n: "Crankset", d: "Small single chainring with guard" }, { n: "Pedals", d: "Rubber non-slip pedals (no sharp edges)" }, { n: "Seatpost", d: "Steel with quick-release or bolt" }, { n: "Saddle", d: "Small padded saddle" }, { n: "Frame", d: "Low standover steel/alloy frame" }, { n: "Front wheel", d: "Steel/alloy rim, rubber tire, Schrader" }, { n: "Rear wheel", d: "Steel/alloy rim, coaster brake hub, Schrader" }, { n: "Training wheels", d: "Removable stabilizer wheels (12\"–16\" bikes)" }, { n: "Mudguards", d: "Color-matched plastic fenders" }, { n: "Kickstand", d: "Side kickstand (16\"+)" }, { n: "Bell", d: "Fun character bell" }, { n: "Reflectors", d: "Full set: front, rear, wheel, pedal" }],
+                pricing: { entry: { inr: "₹3,000–8,000", usd: "$50–120" }, mid: { inr: "₹8,000–20,000", usd: "$120–300" }, premium: { inr: "₹20,000–50,000+", usd: "$300–600+" }, brands: "Btwin (Decathlon), Firefox Stardust, Hero Sprint, Giant ARX, Frog Bikes, woom, Cannondale Kids, Trek Precaliber" },
+                maintenance: { serviceInterval: "Every 6 months or when growth requires adjustment", commonIssues: "Outgrowing the bike, training wheel misalignment, chain dropping off guard, tire punctures, loose bolts (vibration)", keyTasks: "Adjust seat height as child grows, check training wheel alignment, keep tires inflated, tighten all bolts regularly, lubricate chain lightly" },
+                pros: ["Designed for safety and ease of learning", "Affordable price range", "Colorful and appealing designs for kids", "Training wheels for beginners", "Available in many sizes for growth stages"],
+                cons: ["Outgrown quickly — limited lifespan", "Heavy steel models hard for kids to handle", "Cheap models have poor components", "Not suitable for rough terrain", "Limited resale value"],
+                idealFor: { riderProfile: "Children ages 3–12, beginner riders learning to cycle", bestScenarios: "Learning to ride, park cycling, school commuting, neighborhood riding, family rides" }
+            }
+        ];
+        CYCLES_DATA.push(
+            {
+                id: "commuter-motorcycle", name: "Standard / Commuter Motorcycle", nicknames: "Naked Bike, Street Bike, Daily Commuter", category: "motorized",
+                overview: { origin: "The standard motorcycle design dates back to early 1900s. Honda CB series (1969) defined the modern commuter segment. Most popular motorcycle type worldwide.", primaryUse: "Daily commuting, city riding, short-to-medium distance travel, practical transportation.", skillLevel: "Beginner to Intermediate", terrain: "Road / Urban" },
+                specs: { frameMaterial: "Steel tubular / Diamond frame", frameGeometry: "Upright standard geometry", suspension: "Front telescopic fork / Rear twin shock or monoshock", weight: "130–170 kg", maxLoad: "150–200 kg", wheelSize: "Front 80/100-18, Rear 100/90-18", tireType: "Tubeless bias-ply or radial", rimType: "Alloy spoked or cast wheels", gears: "5-speed manual transmission", drivetrain: "Chain drive", gearShifter: "Sequential foot shift (1-N-2-3-4-5)", crankset: "N/A", bottomBracket: "N/A" },
+                wheels: { frontTire: "80/100-18 or 90/90-17", rearTire: "100/90-18 or 110/80-17", psi: "28–32 PSI front, 32–36 PSI rear", tubeSize: "Tubeless", rimDiameter: "18\" or 17\"", rimWidth: "1.85–2.15\"", spokeCount: "36 (spoked) or cast alloy", valveType: "Schrader" },
+                braking: { brakeType: "Disc front / Drum or Disc rear, CBS or ABS available", frontBrake: "240–276mm disc, single piston", rearBrake: "130mm drum or 220mm disc", rotorSize: "240–276mm front" },
+                powertrain: { engineType: "4-stroke, Single cylinder or Twin", displacement: "100–200cc", cooling: "Air-cooled", fuelType: "Petrol", transmission: "5-speed manual, constant mesh", starterType: "Electric + Kick (some models)", maxPower: "8–20 bhp @ 7,500–9,000 RPM", maxTorque: "9–17 Nm @ 5,500–7,000 RPM", topSpeed: "90–130 km/h", fuelCapacity: "10–14 liters", mileage: "40–65 km/L" },
+                ergonomics: { handlebarType: "Standard / Flat", handlebarWidth: "720–760mm", saddleType: "Dual seat with grab rail", seatHeight: "770–800mm", ridingPosture: "Upright / Neutral", footpegPosition: "Mid-set footpegs" },
+                components: [{ n: "Engine", d: "Single-cylinder 4-stroke air-cooled" }, { n: "Exhaust", d: "Upswept chrome or black muffler" }, { n: "Air filter", d: "Paper element air filter" }, { n: "Carburetor", d: "CV carburetor or PGM-FI fuel injection" }, { n: "Battery", d: "12V MF battery" }, { n: "Spark plug", d: "NGK standard plug" }, { n: "Clutch", d: "Wet multi-plate clutch" }, { n: "Instrument cluster", d: "Analog or digital speedo/tacho/fuel gauge" }, { n: "Fuel tank", d: "12L steel tank" }, { n: "Chain", d: "428 or 520 roller chain" }, { n: "Swingarm", d: "Steel box-section swingarm" }, { n: "Front forks", d: "Telescopic 31–33mm conventional forks" }, { n: "Mirrors", d: "Bar-end or stem-mount mirrors" }, { n: "Turn signals", d: "LED or bulb indicators" }, { n: "Ignition switch", d: "Key ignition with steering lock" }, { n: "Headlight", d: "LED or halogen H4" }, { n: "Taillight", d: "LED tail/brake light" }, { n: "Kickstand", d: "Side stand with engine cut-off sensor" }],
+                pricing: { entry: { inr: "₹70,000–1,00,000", usd: "$800–1,500" }, mid: { inr: "₹1,00,000–1,80,000", usd: "$1,500–2,500" }, premium: { inr: "₹1,80,000–3,00,000", usd: "$2,500–4,000" }, brands: "Honda CB Shine/Unicorn, Bajaj Pulsar 150, TVS Apache RTR 160, Yamaha FZ-S, Hero Xtreme 160R" },
+                maintenance: { serviceInterval: "Every 3,000–5,000 km or 3 months", commonIssues: "Chain slack, engine oil degradation, brake pad wear, clutch cable stretch, carburetor tuning", keyTasks: "Engine oil change every 3,000 km, chain clean/lube every 500 km, air filter clean every 5,000 km, valve clearance check at 12,000 km" },
+                pros: ["Excellent fuel efficiency", "Affordable purchase and running costs", "Easy to ride and maneuver", "Widely available parts and service", "Practical for daily commuting"],
+                cons: ["Limited highway performance", "Basic features on entry models", "Not exciting for enthusiasts", "Wind exposure at speed", "Pillion comfort varies"],
+                idealFor: { riderProfile: "Daily commuters, first-time riders, students, budget-conscious riders", bestScenarios: "City commuting, office travel, errands, short-distance touring" }
+            },
+
+            {
+                id: "sports-bike", name: "Sports Bike / Superbike", nicknames: "Supersport, Crotch Rocket, Sportbike, Racer", category: "motorized",
+                overview: { origin: "Evolved from 1960s café racer culture. Japanese manufacturers (Honda, Yamaha, Kawasaki, Suzuki) defined the modern sportbike in the 1980s-90s with models like GSX-R and CBR.", primaryUse: "High-performance sport riding, track days, canyon carving, racing.", skillLevel: "Expert", terrain: "Road / Track" },
+                specs: { frameMaterial: "Aluminum twin-spar or trellis frame", frameGeometry: "Aggressive clip-on geometry, steep rake angle", suspension: "USD inverted forks (front) / Monoshock with linkage (rear)", weight: "170–210 kg", maxLoad: "180–200 kg", wheelSize: "Front 120/70-ZR17, Rear 180/55-ZR17 or 190/55-ZR17", tireType: "Tubeless radial sport compound", rimType: "Cast aluminum alloy", gears: "6-speed close-ratio manual with quickshifter", drivetrain: "Chain drive (520/525)", gearShifter: "Sequential foot shift with quickshifter (up+down)", crankset: "N/A", bottomBracket: "N/A" },
+                wheels: { frontTire: "120/70-ZR17", rearTire: "180/55-ZR17 or 190/55-ZR17", psi: "33–36 PSI front, 36–42 PSI rear", tubeSize: "Tubeless", rimDiameter: "17\"", rimWidth: "3.50\" front, 5.50–6.00\" rear", spokeCount: "Cast alloy (no spokes)", valveType: "Schrader" },
+                braking: { brakeType: "Dual disc front / Single disc rear, ABS standard, cornering ABS on premium", frontBrake: "Dual 310–320mm discs, 4-piston radial monobloc calipers", rearBrake: "Single 220–245mm disc, single piston", rotorSize: "310–320mm front, 220–245mm rear" },
+                powertrain: { engineType: "4-stroke, Inline-4 / V-Twin / Triple", displacement: "300–1000cc+", cooling: "Liquid-cooled", fuelType: "Petrol (premium recommended)", transmission: "6-speed close-ratio manual, quickshifter", starterType: "Electric", maxPower: "40–200+ bhp @ 10,000–14,000 RPM", maxTorque: "28–115 Nm @ 8,000–11,000 RPM", topSpeed: "180–300+ km/h", fuelCapacity: "14–17 liters", mileage: "15–25 km/L" },
+                ergonomics: { handlebarType: "Clip-on (below triple clamp)", handlebarWidth: "600–660mm", saddleType: "Split sport seat, thin padding", seatHeight: "810–835mm", ridingPosture: "Aggressive / Tucked", footpegPosition: "Rear-set footpegs" },
+                components: [{ n: "Engine", d: "Inline-4 or twin, liquid-cooled, DOHC, 4-valve" }, { n: "Exhaust", d: "Underseat or side-mount stainless/titanium exhaust" }, { n: "Air filter", d: "High-flow panel filter" }, { n: "Fuel injector", d: "Multi-point fuel injection with ride-by-wire throttle" }, { n: "Battery", d: "12V lithium-ion or AGM" }, { n: "Spark plug", d: "Iridium spark plugs" }, { n: "Clutch", d: "Slipper/assist clutch, wet multi-plate" }, { n: "Instrument cluster", d: "Full TFT color dash with traction control, riding modes, lap timer" }, { n: "Fuel tank", d: "15L aluminum or steel" }, { n: "Chain", d: "520/525 O-ring or X-ring chain" }, { n: "Swingarm", d: "Braced aluminum swingarm" }, { n: "Front forks", d: "43mm USD fully adjustable inverted forks" }, { n: "Fairing", d: "Full sport fairing with windscreen" }, { n: "Mirrors", d: "Aero-design fairing-mounted mirrors" }, { n: "Turn signals", d: "Flush-mount LED indicators" }, { n: "Ignition switch", d: "Smart key or keyed ignition" }],
+                pricing: { entry: { inr: "₹2,50,000–5,00,000", usd: "$4,000–7,000" }, mid: { inr: "₹5,00,000–15,00,000", usd: "$7,000–18,000" }, premium: { inr: "₹15,00,000–40,00,000+", usd: "$18,000–50,000+" }, brands: "Yamaha YZF-R3/R1, Kawasaki Ninja 300/ZX-10R, Honda CBR600RR/CBR1000RR, Suzuki GSX-R, Ducati Panigale, BMW S1000RR" },
+                maintenance: { serviceInterval: "Every 5,000–10,000 km", commonIssues: "Chain wear, tire degradation (sport compound wears faster), brake pad wear, coolant level, valve clearance", keyTasks: "Change synthetic engine oil every 5,000 km, inspect chain tension, replace brake pads as needed, check coolant level, tire replacement every 5,000–8,000 km" },
+                pros: ["Exhilarating performance and speed", "Advanced electronics (TC, ABS, riding modes)", "Precise handling and cornering", "Track-capable out of the box", "Head-turning aggressive styling"],
+                cons: ["Uncomfortable for long rides", "Very expensive to buy and maintain", "High insurance costs", "Not practical for commuting", "Requires expert riding skills"],
+                idealFor: { riderProfile: "Experienced sport riders, track enthusiasts, performance seekers, motorcycle enthusiasts", bestScenarios: "Track days, weekend canyon rides, sport touring, motorcycle shows" }
+            },
+
+            {
+                id: "cruiser-motorcycle", name: "Cruiser Motorcycle", nicknames: "Chopper, Low Rider, Bobber, Custom Cruiser", category: "motorized",
+                overview: { origin: "American cruiser culture born in the 1930s–1950s. Harley-Davidson defined the segment. Characterized by low seats, forward controls, and V-twin engines. A cultural icon.", primaryUse: "Relaxed highway cruising, leisure riding, weekend touring, motorcycle culture.", skillLevel: "Intermediate", terrain: "Road / Highway" },
+                specs: { frameMaterial: "Steel tubular cradle or double-cradle frame", frameGeometry: "Low-slung, long wheelbase, relaxed rake angle (30–35°)", suspension: "Conventional telescopic forks (front) / Twin shocks or hardtail (rear)", weight: "220–350 kg", maxLoad: "200–250 kg", wheelSize: "Front 100/90-19 or 130/90-16, Rear 150/80-16 or 180/65-16", tireType: "Tubeless bias-ply or radial", rimType: "Cast alloy or wire-spoked chrome", gears: "5 or 6-speed manual, wide-ratio", drivetrain: "Belt drive or Chain drive or Shaft drive", gearShifter: "Sequential foot shift (heel-toe)", crankset: "N/A", bottomBracket: "N/A" },
+                wheels: { frontTire: "100/90-19 or 130/90-16", rearTire: "150/80-16 or 180/65-16", psi: "30–36 PSI front, 36–40 PSI rear", tubeSize: "Tubed (spoked) or Tubeless (cast)", rimDiameter: "16–19\" front, 15–16\" rear", rimWidth: "3.00\" front, 5.00–5.50\" rear", spokeCount: "40 (laced) or cast alloy", valveType: "Schrader" },
+                braking: { brakeType: "Disc front / Disc or Drum rear, ABS available", frontBrake: "Single or dual 292–300mm discs", rearBrake: "Single 292mm disc or drum", rotorSize: "292–300mm" },
+                powertrain: { engineType: "4-stroke, V-Twin (45° or 60°) or Parallel Twin", displacement: "250–1800cc+", cooling: "Air-cooled or Air/Oil-cooled", fuelType: "Petrol", transmission: "5 or 6-speed wide-ratio manual", starterType: "Electric", maxPower: "20–100 bhp @ 4,500–6,000 RPM", maxTorque: "30–150 Nm @ 2,500–4,000 RPM", topSpeed: "120–200 km/h", fuelCapacity: "12–20 liters", mileage: "15–30 km/L" },
+                ergonomics: { handlebarType: "Ape hanger / Drag bar / Beach bar / Mini-ape", handlebarWidth: "780–900mm", saddleType: "Wide low-profile solo or two-up seat", seatHeight: "630–720mm (very low)", ridingPosture: "Laid-back / Feet forward", footpegPosition: "Forward controls — feet well ahead of hips" },
+                components: [{ n: "Engine", d: "V-Twin air-cooled, pushrod or OHV" }, { n: "Exhaust", d: "Slash-cut chrome or shotgun dual pipes" }, { n: "Air filter", d: "High-flow chrome air cleaner cover" }, { n: "Fuel injector", d: "EFI or Carburetor (older models)" }, { n: "Battery", d: "12V AGM sealed battery" }, { n: "Spark plug", d: "Dual spark plugs (V-Twin)" }, { n: "Clutch", d: "Wet multi-plate cable-operated" }, { n: "Instrument cluster", d: "Single round analog speedo, tank-mounted" }, { n: "Fuel tank", d: "Teardrop or fat bob 14–20L chrome/painted steel" }, { n: "Chain", d: "Belt drive (Kevlar) or 530 chain" }, { n: "Swingarm", d: "Steel swingarm or rigid frame" }, { n: "Front forks", d: "41–49mm conventional telescopic forks, chrome legs" }, { n: "Mirrors", d: "Chrome round or custom mirrors" }, { n: "Turn signals", d: "Bullet-style chrome turn signals" }, { n: "Ignition switch", d: "Key ignition with fork lock" }],
+                pricing: { entry: { inr: "₹1,50,000–3,00,000", usd: "$3,000–6,000" }, mid: { inr: "₹3,00,000–10,00,000", usd: "$6,000–15,000" }, premium: { inr: "₹10,00,000–35,00,000+", usd: "$15,000–45,000+" }, brands: "Harley-Davidson Iron/Street/Fat Bob, Indian Scout/Chief, Royal Enfield Meteor/Super Meteor, Honda Rebel, Kawasaki Vulcan, Bajaj Avenger" },
+                maintenance: { serviceInterval: "Every 5,000–8,000 km", commonIssues: "Belt wear (if belt drive), chrome pitting, engine heat on legs, heavy weight low-speed handling, battery drain", keyTasks: "Engine oil change every 5,000 km, inspect belt/chain, check tire pressure, polish chrome, lubricate cables" },
+                pros: ["Extremely comfortable low riding position", "Iconic styling and culture", "Strong low-end torque", "Very low seat height", "Great for highway cruising"],
+                cons: ["Very heavy — hard to maneuver slowly", "Poor cornering clearance", "Limited lean angle", "High fuel consumption (large engines)", "Expensive — especially Harley-Davidson"],
+                idealFor: { riderProfile: "Leisure riders, Harley culture enthusiasts, highway cruisers, custom bike builders", bestScenarios: "Weekend highway rides, motorcycle rallies, long boulevard cruising, custom bike shows" }
+            },
+
+            {
+                id: "dirt-bike", name: "Dirt Bike / Off-road Motorcycle", nicknames: "Enduro, Motocross, MX Bike, Trail Bike", category: "motorized",
+                overview: { origin: "Evolved from 1920s–1930s European off-road trials and scrambles. Motocross racing formalized in 1950s Europe. Japanese manufacturers revolutionized the segment in the 1970s.", primaryUse: "Off-road racing, motocross, enduro, trail riding, cross-country.", skillLevel: "Intermediate to Expert", terrain: "Off-road / Dirt / Trail / Mud" },
+                specs: { frameMaterial: "Chromoly steel or Aluminum perimeter frame", frameGeometry: "Tall, narrow, lightweight, high ground clearance (300mm+)", suspension: "USD inverted forks 250–310mm travel (front) / Monoshock 300–320mm travel (rear)", weight: "90–130 kg (dry)", maxLoad: "100–120 kg", wheelSize: "Front 80/100-21, Rear 110/90-19 or 120/80-18", tireType: "Knobby / Aggressive tread pattern, tubed", rimType: "Aluminum alloy spoked", gears: "5 or 6-speed close-ratio manual", drivetrain: "Chain drive (520)", gearShifter: "Sequential foot shift", crankset: "N/A", bottomBracket: "N/A" },
+                wheels: { frontTire: "80/100-21", rearTire: "110/90-19 (MX) or 120/80-18 (Enduro)", psi: "12–15 PSI front, 12–14 PSI rear (very low for traction)", tubeSize: "Heavy-duty tubes with rim locks", rimDiameter: "21\" front, 18–19\" rear", rimWidth: "1.60\" front, 2.15\" rear", spokeCount: "36 front, 36 rear (heavy gauge)", valveType: "Schrader" },
+                braking: { brakeType: "Disc (hydraulic) front and rear", frontBrake: "260mm wave disc, 2-piston caliper", rearBrake: "220–240mm disc, single piston", rotorSize: "260mm front, 220–240mm rear" },
+                powertrain: { engineType: "4-stroke single (or 2-stroke single)", displacement: "125–450cc", cooling: "Liquid-cooled", fuelType: "Petrol (premix for 2-stroke)", transmission: "5 or 6-speed close-ratio manual", starterType: "Electric (modern) or Kick (2-stroke)", maxPower: "15–55 bhp @ 8,000–13,000 RPM", maxTorque: "12–48 Nm @ 6,000–9,000 RPM", topSpeed: "100–170 km/h", fuelCapacity: "6–9 liters", mileage: "12–25 km/L" },
+                ergonomics: { handlebarType: "Flat wide motocross bar (Renthal/ProTaper)", handlebarWidth: "800–820mm", saddleType: "Slim flat gripper seat", seatHeight: "940–980mm (very tall)", ridingPosture: "Standing / Aggressive attack position", footpegPosition: "Wide aggressive footpegs — mid-rear position" },
+                components: [{ n: "Engine", d: "Single-cylinder 4-stroke DOHC or 2-stroke reed-valve" }, { n: "Exhaust", d: "Stainless header with aluminum silencer" }, { n: "Air filter", d: "Foam air filter (oiled, reusable)" }, { n: "Fuel injector", d: "EFI (modern) or Carburetor (Keihin FCR)" }, { n: "Battery", d: "Lithium-ion small or magneto/CDI (no battery on MX)" }, { n: "Spark plug", d: "NGK Iridium" }, { n: "Clutch", d: "Hydraulic wet multi-plate" }, { n: "Instrument cluster", d: "Minimal — enduro has basic speedo/trip, MX has none" }, { n: "Fuel tank", d: "6–9L plastic tank" }, { n: "Chain", d: "520 O-ring chain with aluminum sprockets" }, { n: "Swingarm", d: "Aluminum box-section braced swingarm" }, { n: "Front forks", d: "48mm USD fully adjustable inverted forks (KYB/Showa)" }, { n: "Rear shock", d: "Fully adjustable monoshock with linkage" }, { n: "Handguards", d: "Wrap-around bark busters" }, { n: "Skid plate", d: "Aluminum or plastic engine guard" }],
+                pricing: { entry: { inr: "₹1,00,000–2,50,000", usd: "$2,000–4,000" }, mid: { inr: "₹2,50,000–6,00,000", usd: "$4,000–8,000" }, premium: { inr: "₹6,00,000–12,00,000+", usd: "$8,000–15,000+" }, brands: "Honda CRF250/450, Yamaha YZ/WR, KTM SX/EXC, Husqvarna FC/FE, Kawasaki KX, Gas Gas, Hero Xpulse 200 4V" },
+                maintenance: { serviceInterval: "Every 15–30 engine hours", commonIssues: "Air filter clogging, chain/sprocket wear, spoke loosening, suspension seal leaks, piston/valve wear at high RPM", keyTasks: "Clean and oil air filter after every ride, check chain tension, inspect spokes, change oil every 15 hours, service suspension annually" },
+                pros: ["Unmatched off-road capability", "Ultra-lightweight and agile", "Great suspension travel", "Thrilling motocross/enduro experience", "Excellent learning platform for skills"],
+                cons: ["Not road-legal (pure MX models)", "Very high seat height", "Requires frequent maintenance", "Limited fuel range", "Uncomfortable for road use"],
+                idealFor: { riderProfile: "Off-road racers, motocross enthusiasts, enduro riders, adventure trail riders", bestScenarios: "Motocross tracks, enduro races, trail riding, dirt tracks, off-road adventure" }
+            },
+
+            {
+                id: "scooter-moped", name: "Scooter / Moped", nicknames: "Scooty, Step-through, Automatic Scooter, Twist-and-Go", category: "motorized",
+                overview: { origin: "Vespa (1946, Italy) created the iconic scooter. In India, Bajaj Chetak (1972) and Honda Activa (1999) made scooters mainstream. Now the most popular two-wheeler category in India.", primaryUse: "Urban commuting, short-distance travel, errands, last-mile connectivity.", skillLevel: "Beginner", terrain: "Urban / Road" },
+                specs: { frameMaterial: "Steel monocoque or underbone frame", frameGeometry: "Step-through flat floorboard design", suspension: "Telescopic fork or trailing link (front) / Monoshock or twin shock (rear)", weight: "100–130 kg", maxLoad: "130–180 kg", wheelSize: "Front 90/90-12 or 110/70-12, Rear 90/100-10 or 100/90-10", tireType: "Tubeless", rimType: "Cast alloy", gears: "CVT automatic (Continuously Variable Transmission)", drivetrain: "Belt drive (CVT) to rear wheel", gearShifter: "None — twist-and-go throttle", crankset: "N/A", bottomBracket: "N/A" },
+                wheels: { frontTire: "90/90-12 or 110/70-12", rearTire: "90/100-10 or 100/90-10", psi: "25–30 PSI front, 28–32 PSI rear", tubeSize: "Tubeless", rimDiameter: "10–12\"", rimWidth: "2.50–3.00\"", spokeCount: "Cast alloy (no spokes)", valveType: "Schrader" },
+                braking: { brakeType: "Disc front / Drum rear, CBS standard, ABS on premium", frontBrake: "190–220mm disc or 130mm drum", rearBrake: "130mm drum", rotorSize: "190–220mm (if disc)" },
+                powertrain: { engineType: "4-stroke, Single cylinder, air-cooled", displacement: "100–160cc", cooling: "Air-cooled or Forced air-cooled", fuelType: "Petrol", transmission: "CVT automatic (belt-driven)", starterType: "Electric + Kick (some models)", maxPower: "7–12 bhp @ 7,000–8,500 RPM", maxTorque: "8–14 Nm @ 5,000–6,500 RPM", topSpeed: "80–110 km/h", fuelCapacity: "5–7 liters", mileage: "40–60 km/L" },
+                ergonomics: { handlebarType: "Standard with integrated controls", handlebarWidth: "700mm", saddleType: "Wide flat dual seat with under-seat storage", seatHeight: "760–780mm", ridingPosture: "Upright / Relaxed", footpegPosition: "Flat floorboard — feet flat" },
+                components: [{ n: "Engine", d: "Single-cylinder CVT air-cooled 4-stroke" }, { n: "Exhaust", d: "Enclosed muffler under body" }, { n: "Air filter", d: "Paper element or viscous foam" }, { n: "Fuel injector", d: "PGM-FI or BS6 EFI" }, { n: "Battery", d: "12V 5Ah MF battery" }, { n: "Spark plug", d: "Standard NGK" }, { n: "Instrument cluster", d: "Analog or semi-digital speedo/fuel/odo" }, { n: "Fuel tank", d: "5.3–7L under floorboard" }, { n: "Under-seat storage", d: "18–21L under-seat compartment" }, { n: "Front forks", d: "Telescopic or trailing link" }, { n: "Mirrors", d: "Chrome or black bar-end mirrors" }, { n: "Turn signals", d: "Integrated LED or bulb indicators" }, { n: "Ignition switch", d: "Key with magnetic shutter (anti-theft)" }, { n: "Headlight", d: "LED or Halogen HS1" }, { n: "Taillight", d: "LED tail/brake light" }, { n: "Body panels", d: "Full plastic body panels, painted/matte" }],
+                pricing: { entry: { inr: "₹65,000–85,000", usd: "$800–1,200" }, mid: { inr: "₹85,000–1,20,000", usd: "$1,200–1,800" }, premium: { inr: "₹1,20,000–2,00,000", usd: "$1,800–3,000" }, brands: "Honda Activa/Dio, TVS Jupiter/NTorq, Suzuki Access/Burgman, Yamaha Fascino/Aerox, Vespa, Aprilia SXR, Bajaj Chetak" },
+                maintenance: { serviceInterval: "Every 3,000–5,000 km or 3 months", commonIssues: "CVT belt wear, brake shoe wear, battery weakness, body panel scratches, fuel injector clogging", keyTasks: "Engine oil change every 3,000 km, air filter clean every 5,000 km, check CVT belt at 15,000 km, brake adjustment, battery check" },
+                pros: ["Extremely easy to ride (automatic)", "Great fuel efficiency", "Under-seat storage is very practical", "Low seat height suits all riders", "Affordable and widely serviced"],
+                cons: ["Limited top speed", "Small wheels less stable on rough roads", "Not suitable for highway or long trips", "Less thrilling than geared bikes", "CVT belt replacement can be costly"],
+                idealFor: { riderProfile: "Urban commuters, students, women riders, first-time riders, elderly riders", bestScenarios: "City commuting, college rides, grocery shopping, short errands, stop-and-go traffic" }
+            }
+        );
+        CYCLES_DATA.push(
+            {
+                id: "electric-scooter", name: "Electric Scooter", nicknames: "E-Scooter, EV Scooter, Battery Scooter", category: "motorized",
+                overview: { origin: "Electric scooters gained momentum in the 2010s with Li-ion battery improvements. Ather Energy (2018, India) and Ola Electric (2021) brought premium EVs to the Indian mass market.", primaryUse: "Zero-emission urban commuting, short-distance eco-friendly travel.", skillLevel: "Beginner", terrain: "Urban / Road" },
+                specs: { frameMaterial: "Steel tubular / Aluminum", frameGeometry: "Step-through (similar to petrol scooter)", suspension: "Telescopic fork (front) / Monoshock or twin (rear)", weight: "95–140 kg", maxLoad: "150–200 kg", wheelSize: "Front 90/90-12, Rear 90/90-12", tireType: "Tubeless", rimType: "Cast alloy", gears: "Single-speed direct drive or hub motor", drivetrain: "Electric motor — belt or direct hub drive", gearShifter: "None — twist-and-go", crankset: "N/A", bottomBracket: "N/A" },
+                wheels: { frontTire: "90/90-12 or 110/70-12", rearTire: "90/90-12 or 110/70-12", psi: "28–32 PSI front and rear", tubeSize: "Tubeless", rimDiameter: "12\"", rimWidth: "2.75–3.00\"", spokeCount: "Cast alloy", valveType: "Schrader" },
+                braking: { brakeType: "Disc front / Drum or Disc rear, CBS, Regenerative braking", frontBrake: "200–220mm disc", rearBrake: "190mm disc or 130mm drum + regen", rotorSize: "200–220mm front" },
+                powertrain: { engineType: "BLDC Hub motor or Mid-drive motor", displacement: "N/A (2.5–8 kW motor)", cooling: "Air-cooled (motor) / Battery thermal management", fuelType: "Electric (lithium-ion battery)", transmission: "Single-speed direct drive", starterType: "Electric (push button)", maxPower: "3–8 kW (4–11 bhp)", maxTorque: "18–58 Nm", topSpeed: "60–100 km/h (often limited by software)", fuelCapacity: "1.5–4 kWh battery pack", mileage: "70–150 km per charge" },
+                ergonomics: { handlebarType: "Standard scooter bar", handlebarWidth: "700mm", saddleType: "Dual seat with under-seat storage", seatHeight: "770–800mm", ridingPosture: "Upright", footpegPosition: "Flat floorboard" },
+                components: [{ n: "Motor", d: "BLDC hub motor or mid-drive 2.5–8 kW" }, { n: "Battery pack", d: "Lithium-ion 1.5–4 kWh, removable or fixed" }, { n: "Controller", d: "Motor controller with regen braking" }, { n: "Charger", d: "Portable 750W–1500W onboard charger" }, { n: "Instrument cluster", d: "TFT color touchscreen with navigation, Bluetooth" }, { n: "Front forks", d: "Telescopic 31mm forks" }, { n: "Body panels", d: "Full plastic fairings" }, { n: "Under-seat storage", d: "22–26L helmet-fit compartment" }, { n: "Mirrors", d: "Integrated body-color mirrors" }, { n: "Turn signals", d: "LED sequential indicators" }, { n: "Headlight", d: "LED projector headlamp" }, { n: "Taillight", d: "LED strip tail light" }],
+                pricing: { entry: { inr: "₹80,000–1,20,000", usd: "$1,000–1,500" }, mid: { inr: "₹1,20,000–1,80,000", usd: "$1,500–2,500" }, premium: { inr: "₹1,80,000–3,00,000+", usd: "$2,500–4,000+" }, brands: "Ather 450X/Rizta, Ola S1 Pro/Air, TVS iQube, Bajaj Chetak EV, Hero Vida V1, Ampere Magnus" },
+                maintenance: { serviceInterval: "Every 5,000–10,000 km (very low maintenance)", commonIssues: "Battery degradation over years, software glitches, charging port issues, tire wear, brake pad wear", keyTasks: "Check tire pressure monthly, brake pad inspection, software updates (OTA), battery health monitoring, keep contacts clean" },
+                pros: ["Zero emissions — eco-friendly", "Very low running cost (electricity vs petrol)", "Smart connected features (app, navigation, OTA)", "Instant torque — peppy acceleration", "Minimal maintenance — no oil/chain/clutch"],
+                cons: ["Limited range per charge", "Charging infrastructure still developing", "Battery replacement cost is high", "Heavier than petrol counterparts", "Resale value uncertain"],
+                idealFor: { riderProfile: "Eco-conscious commuters, tech-savvy riders, city dwellers, cost-conscious daily riders", bestScenarios: "Daily city commute under 80 km, college rides, short errands, last-mile delivery" }
+            },
+
+            {
+                id: "electric-bike", name: "Electric Bike (e-Bike)", nicknames: "Pedal-Assist Bike, Pedelec, Power-Assisted Bicycle, E-Bicycle", category: "motorized",
+                overview: { origin: "Early electric bikes existed in the 1890s, but modern e-bikes took off in China (2000s) and Europe (2010s). Now the fastest growing bicycle segment worldwide. Legal as bicycles in most countries (up to 250W/25 km/h).", primaryUse: "Assisted cycling for commuting, hill climbing, fitness with assistance, cargo carrying.", skillLevel: "Beginner", terrain: "Urban / Road / Light Trail / Hills" },
+                specs: { frameMaterial: "Aluminum / Steel", frameGeometry: "Similar to hybrid/city bike with integrated battery", suspension: "None or Front fork (50–80mm travel)", weight: "18–28 kg (including battery)", maxLoad: "120–150 kg", wheelSize: "700×38c or 27.5\"×2.0\"", tireType: "Semi-slick / Puncture-resistant", rimType: "Double-wall Alloy", gears: "Shimano 7–9 speed + electric assist levels (Eco/Normal/Sport/Turbo)", drivetrain: "Chain drive + electric mid-drive or hub motor", gearShifter: "Trigger shifter + e-assist mode button", crankset: "Single 38–44T with motor torque sensor", bottomBracket: "Integrated with mid-drive motor (Bosch, Shimano Steps, Bafang)" },
+                wheels: { frontTire: "700×38c or 27.5\"×2.0\"", rearTire: "700×38c or 27.5\"×2.0\"", psi: "40–65 PSI", tubeSize: "Standard Schrader tube or tubeless", rimDiameter: "622mm or 584mm", rimWidth: "19–23mm internal", spokeCount: "32–36 spokes", valveType: "Schrader" },
+                braking: { brakeType: "Disc (hydraulic or mechanical)", frontBrake: "Hydraulic disc 160–180mm", rearBrake: "Hydraulic disc 160mm", rotorSize: "160–180mm front, 160mm rear" },
+                powertrain: { engineType: "Electric mid-drive or hub motor", displacement: "N/A (250W–750W motor)", cooling: "Air-cooled (passive)", fuelType: "Electric (lithium-ion battery)", transmission: "7–9 speed + pedal assist", starterType: "Pedal-activated (pedelec) or throttle", maxPower: "250–750W (0.3–1 bhp)", maxTorque: "40–85 Nm (mid-drive)", topSpeed: "25–45 km/h (limited by regulation)", fuelCapacity: "250–750 Wh battery", mileage: "40–150 km per charge (assist level dependent)" },
+                ergonomics: { handlebarType: "Flat or Riser", handlebarWidth: "620–680mm", saddleType: "Comfort city saddle", seatHeight: "700–900mm", ridingPosture: "Upright", footpegPosition: "Standard pedals — mid position" },
+                components: [{ n: "Motor", d: "250W mid-drive (Bosch/Shimano Steps) or hub motor" }, { n: "Battery", d: "36V/48V lithium-ion, 400–750 Wh, frame-integrated" }, { n: "Display/Controller", d: "LCD or LED handlebar display showing speed, assist level, range, battery %" }, { n: "Charger", d: "2A–4A wall charger (3–6 hour full charge)" }, { n: "Speed sensor", d: "Cadence or torque sensor for pedal-assist activation" }, { n: "Fork", d: "Rigid or suspension fork" }, { n: "Handlebars", d: "Flat/riser bar with motor controls" }, { n: "Shifters", d: "Shimano trigger 7–9 speed" }, { n: "Rear derailleur", d: "Shimano Altus/Acera" }, { n: "Chain", d: "Reinforced e-bike chain" }, { n: "Crankset", d: "Single chainring with motor integration" }, { n: "Pedals", d: "Platform with reflectors" }, { n: "Seatpost", d: "27.2mm alloy" }, { n: "Saddle", d: "Comfort city saddle" }, { n: "Frame", d: "Aluminum with integrated battery housing" }, { n: "Mudguards", d: "Full-coverage fenders" }, { n: "Carrier", d: "Rear rack rated for 25 kg" }, { n: "Kickstand", d: "Heavy-duty center kickstand" }, { n: "Headlight", d: "Integrated LED powered by main battery" }, { n: "Taillight", d: "Integrated LED taillight with brake light" }],
+                pricing: { entry: { inr: "₹30,000–60,000", usd: "$500–800" }, mid: { inr: "₹60,000–1,50,000", usd: "$800–2,000" }, premium: { inr: "₹1,50,000–5,00,000+", usd: "$2,000–6,000+" }, brands: "Btwin (Decathlon), Giant Explore E+, Trek Verve+, Specialized Turbo Vado, EMotorad, Lectric, Hero Lectro, Motovolt" },
+                maintenance: { serviceInterval: "Every 3,000–5,000 km or biannually", commonIssues: "Battery range decrease over years, display malfunctions, motor sensor issues, chain wear (higher torque), brake pad wear (heavier)", keyTasks: "Keep battery between 20–80% charge, lubricate chain, check brake pads, inspect electrical connectors, software/firmware updates" },
+                pros: ["Makes cycling accessible to all fitness levels", "Conquers hills with ease", "Longer commute range than regular bikes", "Eco-friendly alternative to cars/motorcycles", "Still counts as exercise (pedal-assist)"],
+                cons: ["Heavy compared to regular bicycles", "Battery has limited lifespan (500–1000 cycles)", "Expensive initial purchase", "Charging takes 3–6 hours", "Complex electronics can be costly to repair"],
+                idealFor: { riderProfile: "Commuters seeking sweat-free rides, older cyclists, hilly terrain riders, cargo carriers, fitness with assistance", bestScenarios: "Hill-heavy commuting, long-distance daily rides, food delivery, recreational cycling for seniors, replacing car trips" }
+            },
+
+            {
+                id: "cafe-racer", name: "Café Racer", nicknames: "Ton-up, Clipper, Racer, Neo-retro", category: "motorized",
+                overview: { origin: "Born in 1960s London's Ace Café culture — riders stripped and modified standard bikes to race between cafés. The 'ton' (100 mph) was the goal. Now a global custom motorcycle style.", primaryUse: "Stylish urban riding, custom motorcycle culture, weekend leisure, show bikes.", skillLevel: "Intermediate", terrain: "Road / Urban" },
+                specs: { frameMaterial: "Steel tubular cradle or loop frame", frameGeometry: "Low clip-on bars, rear-set pegs, minimal bodywork, aggressive lean", suspension: "Conventional or USD forks (front) / Twin shocks (rear) — often upgraded aftermarket", weight: "140–200 kg", maxLoad: "160–200 kg", wheelSize: "Front 100/90-18, Rear 130/80-18 or 110/70-17, 140/70-17", tireType: "Classic pattern or modern sport compound, tubeless or tubed", rimType: "Wire-spoked chrome or cast alloy", gears: "5 or 6-speed manual", drivetrain: "Chain drive", gearShifter: "Sequential foot shift", crankset: "N/A", bottomBracket: "N/A" },
+                wheels: { frontTire: "100/90-18 or 110/70-17", rearTire: "130/80-18 or 140/70-17", psi: "28–33 PSI front, 32–36 PSI rear", tubeSize: "Tubed (spoked) or Tubeless (cast)", rimDiameter: "17–18\"", rimWidth: "2.50\" front, 3.50–4.00\" rear", spokeCount: "36 (spoked) or cast", valveType: "Schrader" },
+                braking: { brakeType: "Disc front / Disc or Drum rear", frontBrake: "Single 300mm disc, 2-piston", rearBrake: "240mm disc or drum", rotorSize: "300mm front, 240mm rear" },
+                powertrain: { engineType: "4-stroke, Single / Twin / Inline-4", displacement: "200–1200cc", cooling: "Air-cooled (classic) or Liquid (modern)", fuelType: "Petrol", transmission: "5 or 6-speed manual", starterType: "Electric (+ kick on classics)", maxPower: "15–90 bhp @ 5,000–9,000 RPM", maxTorque: "18–100 Nm @ 3,500–7,000 RPM", topSpeed: "120–220 km/h", fuelCapacity: "9–15 liters", mileage: "20–35 km/L" },
+                ergonomics: { handlebarType: "Clip-on or Clubman bars", handlebarWidth: "580–660mm", saddleType: "Slim single or humped café seat with cowl", seatHeight: "780–820mm", ridingPosture: "Aggressive / Forward lean", footpegPosition: "Rear-set or mid-set" },
+                components: [{ n: "Engine", d: "Classic single/twin air-cooled or modern parallel twin" }, { n: "Exhaust", d: "Slash-cut shorty megaphone or reverse cone mufflers" }, { n: "Air filter", d: "Pod filters or velocity stacks" }, { n: "Fuel tank", d: "Sculpted narrow 12–15L tank with knee dents" }, { n: "Instrument cluster", d: "Minimal — single round analog or small digital" }, { n: "Fairing", d: "Bikini fairing / fly screen or none" }, { n: "Mirrors", d: "Bar-end round mirrors" }, { n: "Turn signals", d: "Micro LED indicators (aftermarket)" }, { n: "Seat", d: "Slim single seat with rear cowl/hump" }, { n: "Front forks", d: "Conventional or USD (often upgraded)" }, { n: "Rear shocks", d: "Twin adjustable gas shocks" }],
+                pricing: { entry: { inr: "₹1,50,000–3,00,000", usd: "$2,500–5,000" }, mid: { inr: "₹3,00,000–6,00,000", usd: "$5,000–10,000" }, premium: { inr: "₹6,00,000–20,00,000+", usd: "$10,000–25,000+" }, brands: "Royal Enfield Continental GT 650, Triumph Thruxton/Speed Twin, Honda CB/Hness, Kawasaki Z-RS, Ducati Scrambler Café, BMW R nineT Racer, custom builds" },
+                maintenance: { serviceInterval: "Every 5,000–8,000 km", commonIssues: "Custom part fitment issues, wire-spoke truing, carb tuning (classics), electrical gremlins on old bikes, chrome maintenance", keyTasks: "Oil changes, carb/injector cleaning, valve adjustment (air-cooled), spoke tension, polish chrome, check wiring" },
+                pros: ["Stunning retro-modern aesthetics", "Unique custom culture", "Lightweight and nimble handling", "Strong rider community", "Head-turning presence"],
+                cons: ["Uncomfortable for long rides (aggressive posture)", "Limited practical features", "Custom parts can be expensive", "Not ideal for pillion", "Wind exposure (minimal fairing)"],
+                idealFor: { riderProfile: "Style enthusiasts, custom builders, retro motorcycle fans, urban show riders", bestScenarios: "Weekend café rides, motorcycle meets, urban styling, custom build projects, short Sunday rides" }
+            },
+
+            {
+                id: "adventure-touring", name: "Adventure / Touring Bike", nicknames: "ADV, Dual-sport Tourer, Adventure Motorcycle, Long-distance Bike", category: "motorized",
+                overview: { origin: "BMW R80 G/S (1980) created the adventure segment. Inspired by Paris-Dakar rally bikes. Combines road comfort with off-road capability for globe-trotting adventures.", primaryUse: "Long-distance touring, adventure riding, multi-terrain travel, cross-country expeditions.", skillLevel: "Intermediate to Expert", terrain: "Mixed / Road / Off-road / Gravel / Highway" },
+                specs: { frameMaterial: "Steel trellis or Aluminum twin-spar frame", frameGeometry: "Tall, upright, long-travel suspension, high ground clearance (200–250mm)", suspension: "USD inverted forks 150–220mm travel (front) / Monoshock 150–220mm travel (rear), adjustable", weight: "180–260 kg", maxLoad: "200–250 kg (+ 40–60 kg luggage)", wheelSize: "Front 90/90-21 or 110/80-19, Rear 150/70-17 or 130/80-17", tireType: "Dual-sport / 50-50 on-off road, tubeless or tubed", rimType: "Wire-spoked tubeless or cast alloy", gears: "6-speed manual", drivetrain: "Chain drive or Shaft drive (BMW)", gearShifter: "Sequential foot shift", crankset: "N/A", bottomBracket: "N/A" },
+                wheels: { frontTire: "90/90-21 or 110/80-19", rearTire: "150/70-17 or 130/80-17", psi: "29–33 PSI front, 33–36 PSI rear (adjust for off-road)", tubeSize: "Tubeless or tubed (spoked tubeless rims available)", rimDiameter: "21\" or 19\" front, 17\" rear", rimWidth: "2.15\" front, 4.00–4.50\" rear", spokeCount: "36 front, 36 rear (spoked) or cast", valveType: "Schrader" },
+                braking: { brakeType: "Dual disc front / Single disc rear, ABS (switchable off-road)", frontBrake: "Dual 298–320mm discs, 4-piston radial calipers", rearBrake: "Single 256–276mm disc, single piston", rotorSize: "298–320mm front, 256–276mm rear" },
+                powertrain: { engineType: "4-stroke, Parallel Twin / V-Twin / Boxer Twin / Inline-3", displacement: "250–1300cc", cooling: "Liquid-cooled", fuelType: "Petrol", transmission: "6-speed manual", starterType: "Electric", maxPower: "25–160 bhp @ 6,500–10,500 RPM", maxTorque: "25–138 Nm @ 4,500–8,000 RPM", topSpeed: "140–250 km/h", fuelCapacity: "16–30 liters", mileage: "18–30 km/L" },
+                ergonomics: { handlebarType: "Wide flat or riser bar with hand guards", handlebarWidth: "800–870mm", saddleType: "Wide touring seat, adjustable height, comfort foam", seatHeight: "820–870mm (tall — low seat options available)", ridingPosture: "Upright / Standing capable", footpegPosition: "Mid-set with rubber inserts, standing peg-friendly" },
+                components: [{ n: "Engine", d: "Parallel/V-Twin or Boxer twin, liquid-cooled" }, { n: "Exhaust", d: "Stainless steel header with side-mount or underseat muffler" }, { n: "Air filter", d: "Replaceable paper/foam panel filter" }, { n: "Fuel injector", d: "Ride-by-wire fuel injection with riding modes" }, { n: "Battery", d: "12V AGM or lithium-ion" }, { n: "Clutch", d: "Slipper/assist clutch" }, { n: "Instrument cluster", d: "TFT color display with navigation, Bluetooth, riding modes" }, { n: "Fuel tank", d: "20–30L large tank for range" }, { n: "Pannier mounts", d: "Factory pannier/luggage rack system" }, { n: "Windscreen", d: "Tall adjustable windscreen" }, { n: "Handguards", d: "Integrated handlebar guards/knuckle protectors" }, { n: "Crash bars", d: "Engine guard crash bars" }, { n: "Center stand", d: "Heavy-duty center stand" }, { n: "Front forks", d: "43–48mm USD fully adjustable inverted forks" }, { n: "Rear shock", d: "Fully adjustable monoshock with preload, compression, rebound" }, { n: "Chain", d: "525 X-ring chain or shaft drive" }, { n: "Skid plate", d: "Aluminum sump guard" }, { n: "Aux lights", d: "LED fog/auxiliary lights" }],
+                pricing: { entry: { inr: "₹1,50,000–3,00,000", usd: "$3,000–5,000" }, mid: { inr: "₹3,00,000–10,00,000", usd: "$5,000–15,000" }, premium: { inr: "₹10,00,000–30,00,000+", usd: "$15,000–35,000+" }, brands: "Royal Enfield Himalayan, KTM 390/890 Adventure, BMW R 1250 GS, Triumph Tiger, Ducati Multistrada, Honda Africa Twin, Suzuki V-Strom, Kawasaki Versys" },
+                maintenance: { serviceInterval: "Every 6,000–10,000 km", commonIssues: "Chain/sprocket wear (long tours), tire wear (mixed terrain), spoke loosening (off-road spoked wheels), windscreen cracks, luggage mount fatigue", keyTasks: "Oil + filter change per service, chain clean/lube/adjust, inspect tires and spokes, coolant check, brake pad inspection, valve clearance at intervals" },
+                pros: ["Supreme versatility — road and off-road", "Incredibly comfortable for long distances", "Large fuel tank for extended range", "Advanced electronics and rider aids", "Built for luggage and touring"],
+                cons: ["Very tall and heavy — hard for short riders", "Expensive — especially premium models", "Off-road capability limited by weight", "Complex electronics need specialist service", "High fuel consumption (large engines)"],
+                idealFor: { riderProfile: "Long-distance tourers, adventure travelers, globe-trotters, mixed-terrain explorers", bestScenarios: "Cross-country road trips, Ladakh/Spiti expeditions, European tours, weekend adventure rides, long-distance commuting" }
+            }
+        );
+        // ===== APP STATE =====
+        let activeCycleId = null, compareMode = false, compareList = [];
+        const $ = id => document.getElementById(id);
+        const sidebar = $('sidebar'), mainContent = $('mainContent');
+
+        // ===== SIDEBAR =====
+        function buildSidebar(filter = '') {
+            const nm = CYCLES_DATA.filter(c => c.category === 'non-motorized'), mt = CYCLES_DATA.filter(c => c.category === 'motorized');
+            const filt = c => !filter || c.name.toLowerCase().includes(filter.toLowerCase()) || c.nicknames.toLowerCase().includes(filter.toLowerCase());
+            const nmf = nm.filter(filt), mtf = mt.filter(filt);
+            let h = `<div class="sidebar-group"><div class="sidebar-group-title" onclick="this.parentElement.classList.toggle('collapsed')">🚲 Non-Motorized (${nmf.length})<span class="arrow">▼</span></div><ul class="sidebar-items">`;
+            nmf.forEach(c => { h += `<li class="sidebar-item${activeCycleId === c.id ? ' active' : ''}" data-id="${c.id}" onclick="selectCycle('${c.id}')">${c.name}</li>`; });
+            h += `</ul></div><div class="sidebar-group"><div class="sidebar-group-title" onclick="this.parentElement.classList.toggle('collapsed')">🏍️ Motorized (${mtf.length})<span class="arrow">▼</span></div><ul class="sidebar-items">`;
+            mtf.forEach(c => { h += `<li class="sidebar-item${activeCycleId === c.id ? ' active' : ''}" data-id="${c.id}" onclick="selectCycle('${c.id}')">${c.name}</li>`; });
+            h += `</ul></div><div class="compare-btn-wrap"><button class="compare-btn${compareMode ? ' active' : ''}" onclick="toggleCompareMode()">${compareMode ? '⚡ EXIT COMPARE' : '⚔️ COMPARE CYCLES'}</button></div>`;
+            sidebar.innerHTML = h;
+        }
+
+        // ===== RENDER HERO =====
+        function showHero() {
+            mainContent.innerHTML = `<div class="hero"><div class="bee-big">🐝</div><h2>CycHigh</h2><p>Select a Cycle. Know Everything.</p><p style="margin-top:24px;color:var(--text-secondary);font-size:14px">18 cycles • Complete specs • Parts glossary • Side-by-side comparison</p></div>`;
+        }
+
+        // ===== RENDER SPEC ROWS =====
+        function specRows(obj, labelMap) {
+            let h = '';
+            for (let k in obj) { if (obj[k] && obj[k] !== 'N/A') { const label = labelMap && labelMap[k] ? labelMap[k] : k.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase()); h += `<div class="spec-row"><span class="spec-label">${label}</span><span class="spec-value">${obj[k]}</span></div>`; } }
+            return h;
+        }
+        const specLabels = { frameMaterial: 'Frame Material', frameGeometry: 'Frame Geometry', suspension: 'Suspension', weight: 'Weight', maxLoad: 'Max Load', wheelSize: 'Wheel Size', tireType: 'Tire Type', rimType: 'Rim Type', gears: 'Gears', drivetrain: 'Drivetrain', gearShifter: 'Gear Shifter', crankset: 'Crankset', bottomBracket: 'Bottom Bracket' };
+        const wheelLabels = { frontTire: 'Front Tire', rearTire: 'Rear Tire', psi: 'Pressure (PSI/bar)', tubeSize: 'Tube Size', rimDiameter: 'Rim Diameter', rimWidth: 'Rim Width', spokeCount: 'Spoke Count', valveType: 'Valve Type' };
+        const brakeLabels = { brakeType: 'Brake Type', frontBrake: 'Front Brake', rearBrake: 'Rear Brake', rotorSize: 'Rotor Size' };
+        const dtLabels = { pedalType: 'Pedal Type', crankArmLength: 'Crank Arm Length', chainStandard: 'Chain Standard', freewheelOrCassette: 'Freewheel/Cassette', derailleurType: 'Derailleur Type' };
+        const ptLabels = { engineType: 'Engine Type', displacement: 'Displacement', cooling: 'Cooling', fuelType: 'Fuel Type', transmission: 'Transmission', starterType: 'Starter', maxPower: 'Max Power', maxTorque: 'Max Torque', topSpeed: 'Top Speed', fuelCapacity: 'Fuel/Battery Capacity', mileage: 'Mileage/Range' };
+        const ergoLabels = { handlebarType: 'Handlebar Type', handlebarWidth: 'Handlebar Width', saddleType: 'Saddle/Seat', seatHeight: 'Seat Height', ridingPosture: 'Riding Posture', footpegPosition: 'Foot Position' };
+
+        // ===== ACCORDION BUILDER =====
+        function acc(icon, title, body, open = false) {
+            return `<div class="accordion${open ? ' open' : ''}"><div class="accordion-header" onclick="this.parentElement.classList.toggle('open')"><span class="icon">${icon}</span>${title}<span class="arrow">▼</span></div><div class="accordion-body">${body}</div></div>`;
+        }
+
+        // ===== RENDER CYCLE =====
+        function renderCycle(c) {
+            const isMotor = c.category === 'motorized';
+            let html = `<div class="cycle-detail"><h1 class="cycle-title">${c.name}</h1><div class="cycle-subtitle">${c.nicknames} • ${c.overview.skillLevel} • ${c.overview.terrain}</div>`;
+            // Overview
+            html += acc('📌', 'Overview', `${specRows({ Origin: c.overview.origin, 'Primary Use': c.overview.primaryUse, 'Skill Level': c.overview.skillLevel, Terrain: c.overview.terrain }, null)}`, true);
+            // Specs
+            html += acc('⚙️', 'Technical Specifications', specRows(c.specs, specLabels));
+            // Wheels
+            html += acc('🛞', 'Wheels & Tires', specRows(c.wheels, wheelLabels));
+            // Braking
+            html += acc('🛑', 'Braking System', specRows(c.braking, brakeLabels));
+            // Drivetrain/Powertrain
+            if (isMotor && c.powertrain) { html += acc('🔧', 'Powertrain', specRows(c.powertrain, ptLabels)); }
+            else if (c.drivetrain && typeof c.drivetrain === 'object' && c.drivetrain.pedalType) { html += acc('🔧', 'Drivetrain', specRows(c.drivetrain, dtLabels)); }
+            // Ergonomics
+            html += acc('🪑', 'Ergonomics & Comfort', specRows(c.ergonomics, ergoLabels));
+            // Components
+            let partsHtml = '<div class="parts-grid">';
+            c.components.forEach(p => { partsHtml += `<div class="part-card" onclick="showGlossary('${p.n.replace(/'/g, "\\'")}')"><div class="pname">${p.n}</div><div class="pdesc">${p.d}</div></div>`; });
+            partsHtml += '</div>';
+            html += acc('🔩', 'Key Components & Parts', partsHtml);
+            // Pricing
+            let priceHtml = `<table class="price-table"><tr><th>Tier</th><th>INR</th><th>USD</th></tr><tr><td>Entry-level</td><td>${c.pricing.entry.inr}</td><td>${c.pricing.entry.usd}</td></tr><tr><td>Mid-range</td><td>${c.pricing.mid.inr}</td><td>${c.pricing.mid.usd}</td></tr><tr><td>Premium</td><td>${c.pricing.premium.inr}</td><td>${c.pricing.premium.usd}</td></tr></table><div class="spec-row" style="margin-top:8px"><span class="spec-label">Popular Brands</span><span class="spec-value">${c.pricing.brands}</span></div>`;
+            html += acc('💰', 'Approximate Price Range', priceHtml);
+            // Maintenance
+            html += acc('🛠️', 'Maintenance Tips', specRows(c.maintenance, { serviceInterval: 'Service Interval', commonIssues: 'Common Issues', keyTasks: 'Key Tasks' }));
+            // Pros & Cons
+            let pcHtml = '<div class="pros-cons"><div class="pros"><h4 style="color:var(--yellow);margin-bottom:8px">✅ Pros</h4><ul>';
+            c.pros.forEach(p => { pcHtml += `<li>${p}</li>`; });
+            pcHtml += '</ul></div><div class="cons"><h4 style="color:var(--yellow);margin-bottom:8px">⚠️ Cons</h4><ul>';
+            c.cons.forEach(p => { pcHtml += `<li>${p}</li>`; });
+            pcHtml += '</ul></div></div>';
+            html += acc('🏆', 'Pros & Cons', pcHtml);
+            // Who is it for
+            html += acc('🎯', 'Who Is It For?', specRows(c.idealFor, { riderProfile: 'Ideal Rider', bestScenarios: 'Best Scenarios' }));
+            html += '</div>';
+            mainContent.innerHTML = html;
+            mainContent.scrollTop = 0;
+            window.scrollTo({ top: 0 });
+        }
+
+        // ===== SELECT CYCLE =====
+        function selectCycle(id) {
+            if (compareMode) {
+                if (compareList.includes(id)) { compareList = compareList.filter(x => x !== id); }
+                else if (compareList.length < 2) { compareList.push(id); }
+                if (compareList.length === 2) { showCompare(); }
+                buildSidebar($('searchInput').value);
+                return;
+            }
+            activeCycleId = id;
+            const c = CYCLES_DATA.find(x => x.id === id);
+            if (c) {
+                mainContent.innerHTML = '<div class="shimmer" style="height:40px;width:60%"></div><div class="shimmer" style="width:40%"></div><div class="shimmer" style="height:200px"></div>';
+                setTimeout(() => renderCycle(c), 300);
+            }
+            buildSidebar($('searchInput').value);
+            if (window.innerWidth <= 768) sidebar.classList.remove('open');
+        }
+
+        // ===== SEARCH =====
+        function filterCycles() { buildSidebar($('searchInput').value); }
+
+        // ===== THEME =====
+        function toggleTheme() {
+            document.body.classList.toggle('light');
+            document.querySelector('.theme-toggle').textContent = document.body.classList.contains('light') ? '🌙 Dark' : '☀️ Light';
+        }
+
+        // ===== SIDEBAR MOBILE =====
+        function toggleSidebar() { sidebar.classList.toggle('open'); }
+
+        // ===== GLOSSARY =====
+        function showGlossary(name) {
+            const desc = PARTS_GLOSSARY[name] || 'A key component of this cycle. Click for more information in a repair manual.';
+            $('glTitle').textContent = name;
+            $('glDesc').textContent = desc;
+            $('glModal').classList.add('show');
+            $('glBackdrop').classList.add('show');
+        }
+        function closeGlossary() { $('glModal').classList.remove('show'); $('glBackdrop').classList.remove('show'); }
+
+        // ===== COMPARE =====
+        function toggleCompareMode() {
+            compareMode = !compareMode; compareList = [];
+            buildSidebar($('searchInput').value);
+            if (!compareMode) $('compareOverlay').classList.remove('show');
+        }
+        function showCompare() {
+            const a = CYCLES_DATA.find(x => x.id === compareList[0]), b = CYCLES_DATA.find(x => x.id === compareList[1]);
+            if (!a || !b) return;
+            const fields = [['Category', 'category'], ['Skill Level', 'overview.skillLevel'], ['Terrain', 'overview.terrain'], ['Frame', 'specs.frameMaterial'], ['Weight', 'specs.weight'], ['Wheel Size', 'specs.wheelSize'], ['Gears', 'specs.gears'], ['Drivetrain', 'specs.drivetrain'], ['Brake Type', 'braking.brakeType'], ['Handlebar', 'ergonomics.handlebarType'], ['Seat Height', 'ergonomics.seatHeight'], ['Posture', 'ergonomics.ridingPosture']];
+            const gv = (o, p) => { const parts = p.split('.'); let v = o; for (let k of parts) v = v ? v[k] : '-'; return v || '-'; };
+            let rows = ''; fields.forEach(([l, p]) => { rows += `<tr><th>${l}</th><td>${gv(a, p)}</td><td>${gv(b, p)}</td></tr>`; });
+            // Add powertrain for motorized
+            if (a.powertrain || b.powertrain) {
+                const ptFields = [['Engine', 'powertrain.engineType'], ['Displacement', 'powertrain.displacement'], ['Max Power', 'powertrain.maxPower'], ['Top Speed', 'powertrain.topSpeed'], ['Mileage', 'powertrain.mileage']];
+                ptFields.forEach(([l, p]) => { rows += `<tr><th>${l}</th><td>${gv(a, p)}</td><td>${gv(b, p)}</td></tr>`; });
+            }
+            // Price
+            rows += `<tr><th>Entry Price (INR)</th><td>${a.pricing.entry.inr}</td><td>${b.pricing.entry.inr}</td></tr>`;
+            rows += `<tr><th>Premium Price (INR)</th><td>${a.pricing.premium.inr}</td><td>${b.pricing.premium.inr}</td></tr>`;
+            $('compareBox').innerHTML = `<button class="compare-close" onclick="$('compareOverlay').classList.remove('show');compareMode=false;compareList=[];buildSidebar();">✕</button><h2>⚔️ Compare: ${a.name} vs ${b.name}</h2><table class="compare-table"><tr><th>Spec</th><th>${a.name}</th><th>${b.name}</th></tr>${rows}</table>`;
+            $('compareOverlay').classList.add('show');
+        }
+
+        // ===== PRINT =====
+        function printSpec() { window.print(); }
+
+        // ===== SCROLL TO TOP =====
+        window.addEventListener('scroll', () => {
+            $('scrollTop').classList.toggle('show', window.scrollY > 300);
+        });
+
+        // ===== INIT =====
+        buildSidebar();
+        showHero();
+    </script>
+</body>
+
+</html>

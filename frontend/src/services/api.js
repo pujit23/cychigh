@@ -1,0 +1,100 @@
+import axios from 'axios'
+
+const API = axios.create({
+  baseURL: 'http://localhost:5000/api',
+  headers: { 'Content-Type': 'application/json' }
+})
+
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem('cychigh_token')
+  if (token) config.headers.Authorization = `Bearer ${token}` 
+  return config
+})
+
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('cychigh_token')
+      localStorage.removeItem('cychigh_user')
+      window.location.href = '/auth'
+    }
+    return Promise.reject(error)
+  }
+)
+
+// CYCLES
+export const getCycles = (params) =>
+  API.get('/cycles', { params })
+export const getCycleById = (id) =>
+  API.get(`/cycles/${id}`)
+export const searchCycles = (q) =>
+  API.get('/cycles/search', { params: { q } })
+export const compareCycles = (ids) =>
+  API.get('/cycles/compare', { params: { ids: ids.join(',') } })
+export const addCycle = (data) =>
+  API.post('/cycles', data)
+export const updateCycle = (id, data) =>
+  API.put(`/cycles/${id}`, data)
+export const deleteCycle = (id) =>
+  API.delete(`/cycles/${id}`)
+export const bulkImport = (data) =>
+  API.post('/cycles/bulk-import', data)
+
+// AUTH
+export const register = (data) =>
+  API.post('/auth/register', data)
+export const login = (data) =>
+  API.post('/auth/login', data)
+export const getMe = () =>
+  API.get('/auth/me')
+
+// USERS
+export const getUserById = (id) =>
+  API.get(`/users/${id}`)
+export const saveCycle = (userId, cycleId) =>
+  API.post(`/users/${userId}/save/${cycleId}`)
+
+// POSTS
+export const getPosts = (params) =>
+  API.get('/posts', { params })
+export const createPost = (data) =>
+  API.post('/posts', data)
+export const upvotePost = (id) =>
+  API.post(`/posts/${id}/upvote`)
+export const getComments = (id) =>
+  API.get(`/posts/${id}/comments`)
+export const addComment = (id, data) =>
+  API.post(`/posts/${id}/comments`, data)
+
+// RIDES
+export const getRides = () =>
+  API.get('/rides')
+export const addRide = (data) =>
+  API.post('/rides', data)
+export const deleteRide = (id) =>
+  API.delete(`/rides/${id}`)
+
+// BUILDS
+export const getBuilds = () =>
+  API.get('/builds')
+export const createBuild = (data) =>
+  API.post('/builds', data)
+export const deleteBuild = (id) =>
+  API.delete(`/builds/${id}`)
+
+// ALERTS
+export const getAlerts = () =>
+  API.get('/alerts')
+export const deleteAlert = (id) =>
+  API.delete(`/alerts/${id}`)
+
+// ADMIN
+export const getAdminStats = () =>
+  API.get('/admin/stats')
+export const getAllUsers = () =>
+  API.get('/admin/users')
+export const banUser = (id) =>
+  API.put(`/admin/users/${id}/ban`)
+
+export default API

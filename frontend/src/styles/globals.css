@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@300;400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-void: #020202;
+  --bg-deepest: #050505;
+  --bg-deep: #080808;
+  --bg-dark: #0C0C0C;
+  --bg-mid: #111111;
+  --bg-elevated: #161616;
+  --bg-surface: #1C1C1C;
+  --border-ghost: #0D0D0D;
+  --border-subtle: #141414;
+  --border-soft: #1F1F1F;
+  --border-mid: #2A2A2A;
+  --border-strong: #333333;
+  --gold: #FFD700;
+  --gold-bright: #FFE033;
+  --gold-mid: #CCAC00;
+  --gold-dim: #997F00;
+  --gold-ghost: rgba(255,215,0,0.06);
+  --red: #DC2626;
+  --red-mid: #B91C1C;
+  --red-ghost: rgba(220,38,38,0.06);
+  --text-primary: #F0F0F0;
+  --text-secondary: #AAAAAA;
+  --text-tertiary: #777777;
+  --text-muted: #555555;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-deepest);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 3px; height: 3px; }
+::-webkit-scrollbar-track { background: #080808; }
+::-webkit-scrollbar-thumb { background: #222222; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #FFD700; }
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    #111 25%, #1a1a1a 50%, #111 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.font-display { font-family: var(--font-display); }
+.font-body { font-family: var(--font-body); }
+.font-mono { font-family: var(--font-mono); }
+
+@media (max-width: 768px) {
+  .nav-center { display: none !important; }
+}
