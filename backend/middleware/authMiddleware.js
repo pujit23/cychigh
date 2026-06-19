@@ -1,4 +1,6 @@
-const jwt = require('jsonwebtoken')
+const { createRemoteJWKSet, jwtVerify } = require('jose')
+
+const JWKS = createRemoteJWKSet(new URL(process.env.SUPABASE_JWKS_URL))
 
 exports.protect = async (req, res, next) => {
   let token
@@ -6,9 +8,12 @@ exports.protect = async (req, res, next) => {
     token = req.headers.authorization.split(' ')[1]
   }
   if (!token) return res.status(401).json({ success: false, message: 'Not authorized' })
+
   try {
-    const decoded = jwt.verify(token, process.env.SUPABASE_JWT_SECRET || process.env.JWT_SECRET)
-    req.user = decoded
+    const { payload } = await jwtVerify(token, JWKS, {
+      algorithms: ['ES256'],
+    })
+    req.user = payload
     next()
   } catch (err) {
     res.status(401).json({ success: false, message: 'Token invalid' })
