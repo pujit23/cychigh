@@ -6,7 +6,7 @@ import { updateLeaderboard } from '../components/Leaderboard';
 import toast from 'react-hot-toast';
 
 const TrackerPage = () => {
-  const { currentUser } = useAuth();
+  const { currentUser, userProfile } = useAuth();
   const [distance, setDistance] = useState('');
   const [duration, setDuration] = useState('');
   const [type, setType] = useState('Road Training');
@@ -63,7 +63,10 @@ const TrackerPage = () => {
 
       if (error) throw error;
 
-      await updateLeaderboard(currentUser.id, distNum);
+      const displayName = userProfile?.display_name || currentUser.user_metadata?.full_name || currentUser.email?.split('@')[0] || 'Rider';
+      const photoUrl = userProfile?.photo_url || currentUser.user_metadata?.avatar_url || null;
+
+      await updateLeaderboard(currentUser.id, distNum, displayName, photoUrl);
       toast.success('Ride logged successfully!');
       
       setDistance('');

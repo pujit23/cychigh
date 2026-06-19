@@ -5,3 +5,8 @@ build/
 .env.local
 .DS_Store
 *.log
+build_log.txt
+build_out.txt
+build_output.txt
+install_log.txt
+temp.txt

@@ -41,14 +41,6 @@ export const deleteCycle = (id) =>
 export const bulkImport = (data) =>
   API.post('/cycles/bulk-import', data)
 
-// AUTH
-export const register = (data) =>
-  API.post('/auth/register', data)
-export const login = (data) =>
-  API.post('/auth/login', data)
-export const getMe = () =>
-  API.get('/auth/me')
-
 // USERS
 export const getUserById = (id) =>
   API.get(`/users/${id}`)

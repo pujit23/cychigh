@@ -6,8 +6,12 @@ const compression = require('compression')
 const morgan = require('morgan')
 const rateLimit = require('express-rate-limit')
 require('dotenv').config()
+const connectDB = require('./config/db')
 
 const app = express()
+
+// Connect to MongoDB
+connectDB()
 
 // Security
 app.use(helmet())
@@ -37,7 +41,6 @@ app.use(morgan('dev'))
 
 // Routes
 app.use('/api/cycles', require('./routes/cycleRoutes'))
-app.use('/api/auth', require('./routes/authRoutes'))
 app.use('/api/users', require('./routes/userRoutes'))
 app.use('/api/posts', require('./routes/postRoutes'))
 app.use('/api/rides', require('./routes/rideRoutes'))
@@ -63,7 +66,7 @@ app.use((err, req, res, next) => {
   })
 })
 
-// Start server without DB
+// Start server
 app.listen(process.env.PORT || 5000, () => {
-  console.log(`🚀 Server running on port ${process.env.PORT || 5000} (MongoDB disabled)`)
+  console.log(`🚀 Server running on port ${process.env.PORT || 5000}`)
 })

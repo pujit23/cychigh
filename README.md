@@ -14,7 +14,7 @@
 
 CycHigh is a full-stack cycling platform with two core pillars:
 
-- **Encyclopedia** — A curated database of 120 bicycles across 25 brands with full technical specs, INR pricing, maintenance guides, and an intelligent 5-parameter recommendation engine.
+- **Encyclopedia** — A curated database of 120 bicycles across 25 brands with full technical specs, INR pricing, maintenance guides, and an intelligent recommendation engine.
 - **Community** — A social platform where riders track live rides on an interactive map, compete on leaderboards, chat in real-time, and manage their profiles.
 
 The backend is powered by Node.js/Express.js with MongoDB Atlas, and real-time features are handled by Supabase (migrating from Firebase).
@@ -25,7 +25,7 @@ The backend is powered by Node.js/Express.js with MongoDB Atlas, and real-time f
 
 ### 📚 Encyclopedia
 - Curated database of **120 bicycles across 25 brands** with complete technical specifications, INR pricing, maintenance guides, and upgrade recommendations
-- **5-parameter recommendation engine** scoring cycles across skill level, terrain type, budget, riding purpose, and fitness goal — returns top 5 matches with percentage scores
+- **Recommendation engine** scoring cycles across 4 parameters (skill level, terrain type, budget, riding purpose) against live `/api/cycles` data — returns top 5 matches with percentage scores
 - Side-by-side **comparison engine** with automated value-highlighting logic
 - Client-side **PDF export** of recommendations and comparisons
 
@@ -35,7 +35,7 @@ The backend is powered by Node.js/Express.js with MongoDB Atlas, and real-time f
 - Route visualisation and ride history
 
 ### 🏆 Leaderboards
-- Competitive ranking system across the community
+- Monthly competitive ranking system using Supabase (`leaderboard_monthly` table and `increment_leaderboard` RPC)
 - Sortable by distance, speed, and activity streaks
 
 ### 💬 Real-time Chat
@@ -51,7 +51,7 @@ The backend is powered by Node.js/Express.js with MongoDB Atlas, and real-time f
 - Ride invites, kudos, and milestone alerts
 
 ### 🔐 Secure Authentication
-- JWT-based auth with `bcryptjs` password hashing
+- Supabase Auth with backend JWT verification
 - Rate limiting, CORS, and HTTP header protection via Helmet
 
 ---
@@ -67,7 +67,7 @@ The backend is powered by Node.js/Express.js with MongoDB Atlas, and real-time f
 | Real-time / BaaS | Supabase JS SDK (migrating from Firebase) |
 | Backend | Node.js, Express.js |
 | Database | MongoDB Atlas, Mongoose ODM |
-| Auth | JWT, bcryptjs |
+| Auth | Supabase Auth (JWT verification on backend) |
 | Security | Helmet, CORS, Express Rate Limit |
 | File Uploads | Multer |
 
@@ -127,14 +127,12 @@ npm install
 
 ### Environment Variables
 
-**Backend** — create `backend/.env`:
+**Backend** — copy `.env.example` to `.env`:
 
-```env
-PORT=5000
-MONGO_URI=your_mongodb_atlas_connection_string
-JWT_SECRET=your_jwt_secret_key
-JWT_EXPIRES_IN=7d
+```bash
+cp backend/.env.example backend/.env
 ```
+Provide your MongoDB connection string (`MONGO_URI`) and Supabase JWT Secret (`SUPABASE_JWT_SECRET`).
 
 **Frontend** — create `frontend/.env`:
 
@@ -168,19 +166,15 @@ npm run seed
 
 ### Auth
 
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/auth/register` | Register new user |
-| POST | `/api/auth/login` | Login, returns JWT |
+*(Authentication is now handled by Supabase directly from the frontend. The backend verifies Supabase JWTs.)*
 
 ### Bicycles (Encyclopedia)
 
 | Method | Endpoint | Description |
 |---|---|---|
-| GET | `/api/bicycles` | Get all bicycles (filter, paginate) |
-| GET | `/api/bicycles/:id` | Get single bicycle by ID |
-| GET | `/api/bicycles/recommend` | Top 5 recommendations by params |
-| GET | `/api/bicycles/compare` | Side-by-side comparison |
+| GET | `/api/cycles` | Get all bicycles (filter, paginate) |
+| GET | `/api/cycles/:id` | Get single bicycle by ID |
+| GET | `/api/cycles/compare` | Side-by-side comparison |
 
 ### Rides (Community)
 
@@ -189,12 +183,6 @@ npm run seed
 | GET | `/api/rides` | Get all rides |
 | POST | `/api/rides` | Log a new ride |
 | GET | `/api/rides/:id` | Get ride by ID |
-
-### Leaderboard
-
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/leaderboard` | Get ranked community list |
 
 ### Users
 
@@ -207,23 +195,22 @@ npm run seed
 
 | Method | Endpoint | Description |
 |---|---|---|
-| POST | `/api/admin/bicycles` | Add new bicycle |
-| PUT | `/api/admin/bicycles/:id` | Update bicycle record |
-| DELETE | `/api/admin/bicycles/:id` | Delete bicycle |
-| POST | `/api/admin/bicycles/bulk` | Bulk JSON import |
+| POST | `/api/admin/cycles` | Add new bicycle |
+| PUT | `/api/admin/cycles/:id` | Update bicycle record |
+| DELETE | `/api/admin/cycles/:id` | Delete bicycle |
+| POST | `/api/admin/cycles/bulk` | Bulk JSON import |
 
 ---
 
 ## 🧠 Recommendation Algorithm
 
-The engine scores each bicycle across 5 parameters and returns a weighted match percentage:
+The engine scores each bicycle across 4 parameters and returns a weighted match percentage:
 
 ```
 Score = (w1 × skill_match)   +
         (w2 × terrain_match) +
         (w3 × budget_match)  +
-        (w4 × purpose_match) +
-        (w5 × fitness_match)
+        (w4 × purpose_match)
 ```
 
 Budget and terrain carry higher default weights. Top 5 results are sorted by descending score and returned with percentage labels. Results can be exported as a PDF client-side.
@@ -267,7 +254,6 @@ graph TD
 
 ## 🔒 Security
 
-- Passwords hashed with `bcryptjs` (salt rounds: 12)
 - JWT tokens with configurable expiry
 - Rate limiting via `express-rate-limit`
 - HTTP headers secured with `Helmet`

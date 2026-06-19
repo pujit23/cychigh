@@ -1,7 +1,8 @@
 import { MOCK_CYCLES } from './constants';
 
-export const calculateMatches = (answers) => {
+export const calculateMatches = (answers, liveData = null) => {
   // answers: [experience, terrain, budget, goal, height] indices (0-3)
+  const cyclesToSearch = liveData && liveData.length > 0 ? liveData : MOCK_CYCLES;
   const experienceVal = answers[0];
   const terrainVal = answers[1];
   const budgetVal = answers[2];
@@ -22,7 +23,7 @@ export const calculateMatches = (answers) => {
     goalVal === 2 ? ['MTB', 'Gravel', 'Touring'] :
     ['Road', 'Track'];
 
-  const results = MOCK_CYCLES.map(cycle => {
+  const results = cyclesToSearch.map(cycle => {
     let score = 0;
     
     // Skill Level (30 points)

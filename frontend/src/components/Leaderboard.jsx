@@ -22,7 +22,7 @@ const Leaderboard = () => {
         uid: r.uid,
         displayName: r.users?.display_name || 'Rider',
         totalKm: r.total_distance,
-        rides: r.rides
+        rides: r.total_rides
       })));
     } else {
       setRiders([]);
@@ -91,8 +91,13 @@ const Leaderboard = () => {
 };
 
 // Exported helper — call this when user logs a ride to update leaderboard
-export const updateLeaderboard = async (uid, addedKm) => {
-  await supabase.rpc('increment_leaderboard', { p_uid: uid, p_distance: addedKm });
+export const updateLeaderboard = async (uid, addedKm, displayName, photoUrl) => {
+  await supabase.rpc('increment_leaderboard', { 
+    p_uid: uid, 
+    p_distance: addedKm,
+    p_display_name: displayName,
+    p_photo_url: photoUrl
+  });
 };
 
 const styles = {
