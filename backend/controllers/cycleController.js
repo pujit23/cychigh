@@ -53,6 +53,7 @@ exports.searchCycles = async (req, res) => {
 exports.compareCycles = async (req, res) => {
   try {
     const { ids } = req.query
+    if (!ids) return res.status(400).json({ success: false, message: 'Missing required "ids" query parameter (comma-separated cycle IDs)' })
     const idArray = ids.split(',')
     const cycles = await Cycle.find({ id: { $in: idArray } })
     res.json({ success: true, cycles })

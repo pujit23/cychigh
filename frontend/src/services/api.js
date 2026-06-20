@@ -1,22 +1,24 @@
 import axios from 'axios'
+import { supabase } from '../supabase/config'
 
 const API = axios.create({
   baseURL: 'http://localhost:5000/api',
   headers: { 'Content-Type': 'application/json' }
 })
 
-API.interceptors.request.use((config) => {
-  const token = localStorage.getItem('cychigh_token')
-  if (token) config.headers.Authorization = `Bearer ${token}` 
+API.interceptors.request.use(async (config) => {
+  const { data: { session } } = await supabase.auth.getSession()
+  if (session?.access_token) {
+    config.headers.Authorization = `Bearer ${session.access_token}`
+  }
   return config
 })
 
 API.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('cychigh_token')
-      localStorage.removeItem('cychigh_user')
+      await supabase.auth.signOut()
       window.location.href = '/auth'
     }
     return Promise.reject(error)
