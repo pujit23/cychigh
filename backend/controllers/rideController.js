@@ -2,7 +2,7 @@ const Ride = require('../models/Ride')
 
 exports.getRides = async (req, res) => {
   try {
-    const rides = await Ride.find({ user: req.user._id }).sort({ date: -1 })
+    const rides = await Ride.find({ user: req.user.sub }).sort({ date: -1 })
     res.json({ success: true, rides })
   } catch (err) {
     res.status(500).json({ success: false, message: err.message })
@@ -11,7 +11,7 @@ exports.getRides = async (req, res) => {
 
 exports.addRide = async (req, res) => {
   try {
-    const ride = await Ride.create({ ...req.body, user: req.user._id })
+    const ride = await Ride.create({ ...req.body, user: req.user.sub })
     res.status(201).json({ success: true, ride })
   } catch (err) {
     res.status(500).json({ success: false, message: err.message })

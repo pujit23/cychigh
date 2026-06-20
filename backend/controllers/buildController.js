@@ -5,7 +5,7 @@ const Build = require('../models/Build');
 // @access  Private
 const getBuilds = async (req, res, next) => {
     try {
-        const builds = await Build.find({ user: req.user._id }).sort({ createdAt: -1 });
+        const builds = await Build.find({ user: req.user.sub }).sort({ createdAt: -1 });
         res.json(builds);
     } catch (error) {
         next(error);
@@ -31,7 +31,7 @@ const createBuild = async (req, res, next) => {
     try {
         const build = new Build({
             ...req.body,
-            user: req.user._id
+            user: req.user.sub
         });
 
         const createdBuild = await build.save();
@@ -46,7 +46,7 @@ const createBuild = async (req, res, next) => {
 // @access  Public
 const getBuildById = async (req, res, next) => {
     try {
-        const build = await Build.findById(req.params.id).populate('user', 'username avatar');
+        const build = await Build.findById(req.params.id);
 
         if (build) {
             res.json(build);
@@ -67,7 +67,8 @@ const updateBuild = async (req, res, next) => {
         const build = await Build.findById(req.params.id);
 
         if (build) {
-            if (build.user.toString() !== req.user._id.toString() && !req.user.isAdmin) {
+            const isAdmin = req.user.email === process.env.ADMIN_EMAIL;
+            if (build.user !== req.user.sub && !isAdmin) {
                 res.status(401);
                 throw new Error('Not authorized to update this build');
             }
@@ -92,7 +93,8 @@ const deleteBuild = async (req, res, next) => {
         const build = await Build.findById(req.params.id);
 
         if (build) {
-            if (build.user.toString() !== req.user._id.toString() && !req.user.isAdmin) {
+            const isAdmin = req.user.email === process.env.ADMIN_EMAIL;
+            if (build.user !== req.user.sub && !isAdmin) {
                 res.status(401);
                 throw new Error('Not authorized to delete this build');
             }

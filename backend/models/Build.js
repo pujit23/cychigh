@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const BuildSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  user: { type: String },
   name: { type: String, default: 'My Build' },
   parts: [{ category: String, brand: String, model: String, weight: Number, cost: Number }],
   totalWeight: Number,
