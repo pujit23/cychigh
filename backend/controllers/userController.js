@@ -1,14 +1,63 @@
-// TODO: getUser and saveCycle currently cannot function because users only exist
-// in Supabase, not in the Mongo User collection. These need to be rewritten to
-// query the Supabase 'users' table directly. Until then, they return explicit errors
-// instead of crashing on null references.
+const { supabaseAdmin } = require('../config/supabaseAdmin')
 
 exports.getUser = async (req, res) => {
-  // TODO: Rewrite to query Supabase 'users' table by ID
-  res.status(501).json({ success: false, message: 'User profile lookup not yet implemented — pending Supabase integration' })
+  try {
+    const { data, error } = await supabaseAdmin
+      .from('users')
+      .select('*')
+      .eq('id', req.params.id)
+      .single()
+
+    if (error && error.code === 'PGRST116') {
+      return res.status(404).json({ success: false, message: 'User not found' })
+    }
+    if (error) throw error
+
+    res.json({ success: true, user: data })
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message })
+  }
 }
 
 exports.saveCycle = async (req, res) => {
-  // TODO: Rewrite to manage saved cycles in Supabase 'users' table
-  res.status(501).json({ success: false, message: 'Save cycle not yet implemented — pending Supabase integration' })
+  try {
+    const userId = req.params.id
+    const { cycleId } = req.params
+
+    // Fetch current saved_cycles
+    const { data: user, error: fetchErr } = await supabaseAdmin
+      .from('users')
+      .select('saved_cycles')
+      .eq('id', userId)
+      .single()
+
+    if (fetchErr && fetchErr.code === 'PGRST116') {
+      return res.status(404).json({ success: false, message: 'User not found' })
+    }
+    if (fetchErr) throw fetchErr
+
+    let savedCycles = user.saved_cycles || []
+
+    // Toggle: add if not present, remove if already saved
+    const idx = savedCycles.indexOf(cycleId)
+    if (idx > -1) {
+      savedCycles.splice(idx, 1)
+    } else {
+      savedCycles.push(cycleId)
+    }
+
+    // Update the row
+    const { data: updated, error: updateErr } = await supabaseAdmin
+      .from('users')
+      .update({ saved_cycles: savedCycles })
+      .eq('id', userId)
+      .select('saved_cycles')
+      .single()
+
+    if (updateErr) throw updateErr
+
+    res.json({ success: true, savedCycles: updated.saved_cycles })
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message })
+  }
 }
