@@ -132,7 +132,7 @@ npm install
 ```bash
 cp backend/.env.example backend/.env
 ```
-Provide your MongoDB connection string (`MONGO_URI`) and Supabase JWT Secret (`SUPABASE_JWT_SECRET`).
+Provide your MongoDB connection string (`MONGO_URI`), Supabase JWKS URL (`SUPABASE_JWKS_URL`), and Supabase service-role key (`SUPABASE_SERVICE_ROLE_KEY`) for admin features.
 
 **Frontend** — create `frontend/.env`:
 
@@ -254,7 +254,7 @@ graph TD
 
 ## 🔒 Security
 
-- JWT tokens with configurable expiry
+- Supabase-issued JWTs verified via ES256/JWKS on the backend
 - Rate limiting via `express-rate-limit`
 - HTTP headers secured with `Helmet`
 - CORS configured for allowed origins only
